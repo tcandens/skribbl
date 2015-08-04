@@ -2,16 +2,17 @@
 
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-jscs'          );
-  grunt.loadNpmTasks('grunt-mocha-test'    );
-	grunt.loadNpmTasks('grunt-contrib-watch' );
-	grunt.loadNpmTasks('grunt-nodemon');
-	grunt.loadNpmTasks('grunt-execute');
+  grunt.loadNpmTasks('grunt-jscs');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-execute');
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // Configure Tasks
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
     jscs: {
       src: [ 'Gruntfile.js',
              '*.js',
@@ -38,29 +39,29 @@ module.exports = function(grunt) {
         jshintrc: true
       }
     },
-		nodemon: {
-			dev: {
-				script: 'server.js'
-			}
-		},
-		watch: {
-			jshint: {
-				files: [ 'Gruntfile.js',
+    nodemon: {
+      dev: {
+        script: 'server.js'
+      }
+    },
+    watch: {
+      jshint: {
+        files: [ 'Gruntfile.js',
                '*.js',
                'lib/**/*.js',
                'models/**/*.js',
                'routes/**/*.js',
                'test/**/*.js'
              ],
-				tasks: ['jshint:dev'],
-				options: { spawn: false }
-			}
-		},
-		execute: {
-			target: {
-				src: ['./lib/task/populate_db_task.js']
-			}
-		},
+        tasks: ['jshint:dev'],
+        options: { spawn: false }
+      }
+    },
+    execute: {
+      target: {
+        src: ['./lib/task/populate_db_task.js']
+      }
+    },
     mochaTest: {
       test: {
         options: {
@@ -76,6 +77,6 @@ module.exports = function(grunt) {
 
   // Custom Task Chains
   grunt.registerTask('test', ['jshint:dev', 'jscs', 'mochaTest']);
-	grunt.registerTask('popdb', ['execute']);
+  grunt.registerTask('popdb', ['execute']);
   grunt.registerTask('default' ,['test']);
 };
