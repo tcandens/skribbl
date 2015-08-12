@@ -1,16 +1,16 @@
 'use strict';
 
-var express  = require('express');
+var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var app      = express();
+var app = express();
 
 // Routers
-var usersRouter    = express.Router();
-var authRouter     = express.Router();
-var readingRouter  = express.Router();
-var skribblRouter  = express.Router();
-var storyRouter    = express.Router();
+var usersRouter = express.Router();
+var authRouter = express.Router();
+var readingRouter = express.Router();
+var skribblRouter = express.Router();
+var storyRouter = express.Router();
 var timelineRouter = express.Router();
 var populateRouter = express.Router();
 
@@ -22,17 +22,19 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/skribbl_dev');
 
 // initialize passport strategy & configure w/ passport_strategy.js
 app.use(passport.initialize());
-require('./lib/passport_strategy.js')(passport);
+require('./lib/bin/passport_strategy.js')(passport);
+
+// Serve static /public directory
+app.use( express.static( 'public' ) );
 
 // Load routers with routes
-require('./routes/users_routes.js'   )(usersRouter);
-require('./routes/auth_routes.js'    )(authRouter, passport);
-require('./routes/reading_routes.js' )(skribblRouter);
-require('./routes/skribbl_routes.js' )(skribblRouter);
-require('./routes/storys_routes.js'  )(storyRouter);
-require('./routes/timeline_routes.js')(timelineRouter);
-require('./routes/populate_routes.js')(timelineRouter);
-
+require('./lib/routes/users_routes.js')(usersRouter);
+require('./lib/routes/auth_routes.js')(authRouter, passport);
+require('./lib/routes/reading_routes.js')(skribblRouter);
+require('./lib/routes/skribbl_routes.js')(skribblRouter);
+require('./lib/routes/storys_routes.js')(storyRouter);
+require('./lib/routes/timeline_routes.js')(timelineRouter);
+require('./lib/routes/populate_routes.js')(timelineRouter);
 
 // Assign base routes for routers
 app.use('/api', usersRouter);

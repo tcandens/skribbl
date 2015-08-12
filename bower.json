@@ -1,0 +1,23 @@
+{
+  "name": "skribbl-clone",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tcandens/skribbl",
+  "authors": [
+    "tcandens <joey.thies@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.20",
+    "backbone": "~1.2.1",
+    "backbone.marionette": "~2.4.2",
+    "lodash": "~3.10.1"
+  }
+}
