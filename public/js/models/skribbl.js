@@ -3,7 +3,7 @@ define('models/skribbl',
   function( Backbone ) {
     return Backbone.Model.extend({
       initialize: function() {
-        console.log( 'new skribbl!' );
+        console.log(this.toJSON());
       }
     });
   }

@@ -1,18 +1,12 @@
 define('app',
-  [ 'marionette', 'backbone', 'wreqr', 'views/rootview', 'collections/master' ],
-  function( Marionette, Backbone, wreqr, RootView, MasterCollection ) {
+  [ 'marionette', 'backbone', 'eventbus', 'views/root' ],
+  function( Marionette, Backbone, EventBus, RootView ) {
     var App = Marionette.Application.extend({
       rootView: new RootView(),
       onStart: function() {
-        if ( Backbone.history ) {
-          Backbone.history.start();
-          console.log('History started!');
-        }
-        this.collection = new MasterCollection();
-        this.collection.url = 'api/storys/random';
-        this.collection.fetch();
-        console.log('App Started');
-        this.rootView.render();
+        Backbone.history.start();
+        var renderedRootView = this.rootView.render();
+        EventBus.trigger('app:start');
       }
     });
     return App;

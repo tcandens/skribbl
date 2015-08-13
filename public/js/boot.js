@@ -14,10 +14,9 @@ requirejs.config({
   }
 });
 
-requirejs( [ 'app' ],
-  function( App ) {
+requirejs( [ 'app', 'collections/master' ],
+  function( App, Collection ) {
     var app = new App();
     app.start();
-    window.app = app;
   }
 );
