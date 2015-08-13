@@ -1,20 +1,23 @@
 requirejs.config({
-  baseUrl: './',
+  baseUrl: 'js/',
   paths: {
-    'underscore': '../vendor/underscore/underscore',
-    'jquery': '../vendor/jquery/dist/jquery',
-    'backbone': '../vendor/backbone/backbone',
-    'marionette': '../vendor/backbone.marionette/lib/backbone.marionette',
+    'lodash': '../../vendor/lodash/lodash',
+    'jquery': '../../vendor/jquery/dist/jquery',
+    'backbone': '../../vendor/backbone/backbone',
+    'wreqr': '../vendor/backbone.wreqr/lib/backbone.wreqr',
+    'marionette': '../../vendor/backbone.marionette/lib/backbone.marionette',
+  },
+  map: {
+    '*': {
+      underscore: 'lodash'
+    }
   }
 });
 
-requirejs( ['underscore', 'jquery', 'backbone', 'marionette'],
-  function(_, $, Backbone, Marionette) {
-    var App = Marionette.Application.extend({
-      initialize: function() {
-        console.log('App Started!');
-      }
-    });
-    window.App = new App();
+requirejs( [ 'app' ],
+  function( App ) {
+    var app = new App();
+    app.start();
+    window.app = app;
   }
 );
