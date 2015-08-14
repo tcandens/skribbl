@@ -7,9 +7,6 @@ define([ 'marionette', 'eventbus', 'randomstory/view' ],
         current: '#current'
       },
       initialize: function() {
-        EventBus.reqres.setHandler('root', function(newView) {
-          this.getRegion('current').show( newView );
-        });
       },
       onBeforeShow: function() {
         this.getRegion('current').show( new RandomStoryView() );

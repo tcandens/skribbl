@@ -6,12 +6,8 @@ define([ 'marionette', 'eventbus', 'rootview' ],
         ':id': 'showSkribble'
       },
       showRandomStory: function() {
-        EventBus.vent.trigger('global', 'router:showRandomStory');
-        var rootView = new RootView();
-        rootView.render();
       },
       showSkribble: function( id ) {
-        alert( id );
       }
     });
     return Router;
