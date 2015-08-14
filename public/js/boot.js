@@ -14,8 +14,8 @@ requirejs.config({
   }
 });
 
-requirejs( [ 'app', 'collections/master' ],
-  function( App, Collection ) {
+requirejs( [ 'app' ],
+  function( App ) {
     var app = new App();
     app.start();
   }

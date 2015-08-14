@@ -1,6 +1,6 @@
 define([ 'wreqr' ],
   function( Wreqr ) {
-    var EventBus = new Wreqr.EventAggregator();
+    var EventBus = Wreqr.radio.channel('global');
     return EventBus;
   }
 );

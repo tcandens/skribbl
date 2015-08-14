@@ -1,12 +1,12 @@
 define('app',
-  [ 'marionette', 'backbone', 'eventbus', 'views/root' ],
-  function( Marionette, Backbone, EventBus, RootView ) {
+  [ 'marionette', 'backbone', 'eventbus', 'router', 'rootview' ],
+  function( Marionette, Backbone, EventBus, Router, RootView ) {
     var App = Marionette.Application.extend({
-      rootView: new RootView(),
+      onBeforeStart: function() {
+        var router = new Router();
+      },
       onStart: function() {
         Backbone.history.start();
-        var renderedRootView = this.rootView.render();
-        EventBus.trigger('app:start');
       }
     });
     return App;
