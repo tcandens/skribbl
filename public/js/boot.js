@@ -4,12 +4,17 @@ requirejs.config({
     'lodash': '../../vendor/lodash/lodash',
     'jquery': '../../vendor/jquery/dist/jquery',
     'backbone': '../../vendor/backbone/backbone',
-    'wreqr': '../vendor/backbone.wreqr/lib/backbone.wreqr',
     'marionette': '../../vendor/backbone.marionette/lib/backbone.marionette',
+    'backbone.radio': '../vendor/backbone.radio/build/backbone.radio',
+    'marionette.radio': 'marionette.radio'
   },
   map: {
     '*': {
+      marionette: 'marionette.radio',
       underscore: 'lodash'
+    },
+    'marionette.radio': {
+      marionette: 'marionette'
     }
   }
 });
