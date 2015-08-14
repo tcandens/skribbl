@@ -1,6 +1,6 @@
-define([ 'wreqr' ],
-  function( Wreqr ) {
-    var EventBus = Wreqr.radio.channel('global');
+define([ 'backbone.radio' ],
+  function( Radio ) {
+    var EventBus = Radio.channel('global');
     return EventBus;
   }
 );
