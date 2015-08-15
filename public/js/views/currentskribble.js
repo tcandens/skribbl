@@ -6,9 +6,16 @@ define([
   'use strict';
 
   var CurrentSkribbleView = Marionette.ItemView.extend({
-    tagName: 'section',
-    className: 'currentSkribble',
-    template: _.template( template )
+    tagName: 'article',
+    className: 'c-current-skribble',
+    template: _.template( template ),
+    initialize: function() {
+      this.model.fetch();
+      this.listenTo( this.model, 'change sync', this.render );
+    },
+    onRender: function() {
+      console.log( this.model );
+    }
   });
   return CurrentSkribbleView
 });
