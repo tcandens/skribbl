@@ -1,14 +1,19 @@
 define('app',
-  [ 'marionette', 'backbone', 'eventbus', 'router', 'rootview' ],
-  function( Marionette, Backbone, EventBus, Router, RootView ) {
+  [ 'marionette', 'backbone', 'eventbus', 'router', 'views/rootview', 'views/currentskribble' ],
+  function( Marionette, Backbone, EventBus, Router, RootView, CurrentSkribbleView ) {
+    'use strict';
+
     var App = Marionette.Application.extend({
       rootView: new RootView(),
       onBeforeStart: function() {
         var router = new Router();
       },
       onStart: function() {
-        Backbone.history.start();
         this.rootView.render();
+        Backbone.history.start();
+      },
+      onBeforeShow: function() {
+        this.showChildView('content', new CurrentSkribbleView() );
       }
     });
     return App;

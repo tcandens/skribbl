@@ -19,6 +19,8 @@
     "backbone": "~1.2.1",
     "backbone.marionette": "~2.4.2",
     "lodash": "~3.10.1",
-    "backbone.radio": "~1.0.0"
+    "backbone.radio": "~1.0.0",
+    "requirejs-text": "~2.0.14",
+    "requirejs-html": "~1.2.0"
   }
 }

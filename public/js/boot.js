@@ -1,17 +1,21 @@
 requirejs.config({
-  baseUrl: 'js/',
+  baseUrl: 'js',
   paths: {
     'lodash': '../../vendor/lodash/lodash',
     'jquery': '../../vendor/jquery/dist/jquery',
     'backbone': '../../vendor/backbone/backbone',
-    'marionette': '../../vendor/backbone.marionette/lib/backbone.marionette',
-    'backbone.radio': '../vendor/backbone.radio/build/backbone.radio',
-    'marionette.radio': 'marionette.radio'
+    'backbone.babysitter': '../vendor/backbone.babysitter/lib/backbone.babysitter',
+    'marionette': '../../vendor/backbone.marionette/lib/core/backbone.marionette',
+    'backbone.radio': '../../vendor/backbone.radio/build/backbone.radio',
+    'marionette.radio': 'marionette.radio',
+    'text': '../vendor/requirejs-text/text',
+    'html': '../vendor/requirejs-html/html'
   },
   map: {
     '*': {
-      marionette: 'marionette.radio',
-      underscore: 'lodash'
+      'marionette': 'marionette.radio',
+      'underscore': 'lodash',
+      'backbone.wreqr': 'backbone.radio'
     },
     'marionette.radio': {
       marionette: 'marionette'
@@ -21,6 +25,8 @@ requirejs.config({
 
 requirejs( [ 'app' ],
   function( App ) {
+    'use strict';
+
     var app = new App();
     app.start();
   }

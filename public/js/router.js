@@ -1,11 +1,15 @@
-define([ 'marionette', 'eventbus', 'rootview' ],
-  function( Marionette, EventBus, RootView ) {
+define([ 'marionette', 'backbone.radio', 'views/currentskribble' ],
+  function( Marionette, Radio, CurrentSkribbleView ) {
+    'use strict';
+
     var Router = Marionette.AppRouter.extend({
       routes: {
-        '': 'showRandomStory',
+        '': 'index',
         ':id': 'showSkribble'
       },
-      showRandomStory: function() {
+      index: function() {
+        var contentView = new CurrentSkribbleView();
+        Radio.channel('root').request('set:content', contentView);
       },
       showSkribble: function( id ) {
       }
