@@ -9,7 +9,6 @@ requirejs.config({
     'backbone.radio': '../../vendor/backbone.radio/build/backbone.radio',
     'marionette.radio': 'marionette.radio',
     'text': '../vendor/requirejs-text/text',
-    'html': '../vendor/requirejs-html/html'
   },
   map: {
     '*': {
@@ -18,7 +17,7 @@ requirejs.config({
       'backbone.wreqr': 'backbone.radio'
     },
     'marionette.radio': {
-      marionette: 'marionette'
+      'marionette': 'marionette'
     }
   }
 });

@@ -1,6 +1,9 @@
-define('app',
-  [ 'marionette', 'backbone', 'eventbus', 'router', 'views/rootview', 'views/currentskribble' ],
-  function( Marionette, Backbone, EventBus, Router, RootView, CurrentSkribbleView ) {
+define([
+  'marionette',
+  'backbone',
+  'router',
+  'views/rootview'
+], function( Marionette, Backbone, Router, RootView ) {
     'use strict';
 
     var App = Marionette.Application.extend({
@@ -11,9 +14,6 @@ define('app',
       onStart: function() {
         this.rootView.render();
         Backbone.history.start();
-      },
-      onBeforeShow: function() {
-        this.showChildView('content', new CurrentSkribbleView() );
       }
     });
     return App;
