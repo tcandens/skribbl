@@ -11,7 +11,7 @@ define([
     template: _.template( template ),
     initialize: function() {
       this.model.fetch();
-      this.listenTo( this.model, 'sync', this.render );
+      //this.listenTo( this.model, 'sync', this.render );
     },
     onRender: function() {
       console.log('Render' + this.id );
