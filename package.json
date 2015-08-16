@@ -1,5 +1,5 @@
 {
-  "name": "OPAAT",
+  "name": "Skribble",
   "version": "0.1.0",
   "description": "Stories built from user contributions.",
   "main": "server.js",
@@ -36,12 +36,9 @@
     "grunt-jscs": "^1.8.0",
     "grunt-mocha-test": "^0.12.7",
     "grunt-nodemon": "^0.4.0",
-    "grunt-webpack": "^1.0.11",
     "jscs": "^1.13.1",
     "jshint": "^2.7.0",
-    "mocha": "^2.2.5",
-    "webpack": "^1.10.5",
-    "webpack-dev-server": "^1.10.1"
+    "mocha": "^2.2.5"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
