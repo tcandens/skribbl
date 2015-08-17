@@ -1,7 +1,10 @@
-$color: green;
+/*
+ * Title: Skribble
+ * Author: Joseph Thies
+ */
 
-html, body {
-  width: 100%;
-  height: 100%;
-  background-color: $color;
-}
+@import '../vendor/normalize-scss/_normalize.scss';
+@import 'base/reset';
+
+@import 'components/home';
+@import 'components/current_skribble';
