@@ -1,6 +1,11 @@
 {
   "default": [
-    "eslint",
-    "sass"
+    "build",
+    "browserSync",
+    "concurrent"
+  ],
+  "build": [
+    "sass",
+    "eslint"
   ]
 }

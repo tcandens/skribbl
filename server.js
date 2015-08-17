@@ -1,5 +1,6 @@
 'use strict';
 
+var port = 8000;
 var express = require('express');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -46,6 +47,6 @@ app.use('/api', timelineRouter );
 app.use('/api', populateRouter );
 
 // Start server
-app.listen(process.env.PORT || 3000, function() {
-  console.log('server running on port ' + (process.env.PORT || 3000) );
+app.listen(process.env.PORT || port, function() {
+  console.log('server running on port ' + (process.env.PORT || port) );
 });
