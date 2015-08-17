@@ -10,7 +10,6 @@ define([
     className: 'c-current-skribble',
     template: _.template( template ),
     initialize: function() {
-      this.model.fetch();
     },
     onRender: function() {
       console.log('Render' + this.id );

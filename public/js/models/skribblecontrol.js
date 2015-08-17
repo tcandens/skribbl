@@ -3,12 +3,12 @@ define([
 ], function( Backbone ) {
   'use strict';
 
-  var SkribbleControlModel = Backbone.Model({
-    defaults: {
-      'content': 'Skribble Data',
-      'parent': null,
-      'children': []
-    }
+  var SkribbleControlModel = Backbone.Model.extend({
+    //defaults: {
+      //'content': 'Skribble Data',
+      //'parent': null,
+      //'children': []
+    //}
   });
 
   return SkribbleControlModel;
