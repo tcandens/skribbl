@@ -17,5 +17,5 @@ define([
       console.log('Render' + this.id );
     }
   });
-  return CurrentSkribbleView
+  return CurrentSkribbleView;
 });
