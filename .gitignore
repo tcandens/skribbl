@@ -1,8 +1,7 @@
 **/node_modules
 public/vendor/**/*
 .sass-cache/
-*.css
-*.map
+public/css/
 npm-debug.log
 .env
 **/*.sw*
