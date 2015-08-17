@@ -1,5 +1,8 @@
 **/node_modules
 public/vendor/**/*
+.sass-cache/
+*.css
+*.map
 npm-debug.log
 .env
 **/*.sw*
