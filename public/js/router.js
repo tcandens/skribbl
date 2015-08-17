@@ -1,7 +1,8 @@
 define([
   'marionette',
-  'controllers/main'
-], function( Marionette, Controller ) {
+  'controllers/main',
+  'backbone.radio'
+], function( Marionette, Controller, Radio ) {
   'use strict';
 
   var Router = Marionette.AppRouter.extend({
@@ -9,6 +10,12 @@ define([
     appRoutes: {
       '': 'index',
       ':id': 'showSkribble'
+    },
+    initialize: function() {
+      Radio.channel('router').reply('navigate', function( url, trigger ) {
+        this.navigate( url, {trigger: trigger} );
+        console.log( 'Navigating!' );
+      }, this);
     }
   });
   return Router;

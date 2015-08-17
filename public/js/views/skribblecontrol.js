@@ -6,8 +6,9 @@ define([
   'models/skribblecontrol',
   'models/skribblemodel',
   'text!templates/skribblecontrol.html',
-  'views/currentskribble'
-], function( Marionette, _, $, Radio, SkribbleControlModel, SkribbleModel, template, CurrentSkribbleView ) {
+  'views/currentskribble',
+  'views/baseskribble'
+], function( Marionette, _, $, Radio, SkribbleControlModel, SkribbleModel, template, CurrentSkribbleView, BaseSkribbleView ) {
   'use strict';
 
   var SkribbleControlView = Marionette.LayoutView.extend({
@@ -20,6 +21,12 @@ define([
       children: '.c-children'
     },
     initialize: function() {
+      Radio.channel('skribbleControl').reply('isRendered', function() {
+        return this._isRendered;
+      }, this);
+      Radio.channel('skribbleControl').reply('get:currentChild', function() {
+        return this.model.get('children').models[ this.model.get('currentChild') ];
+      }, this);
       Radio.channel('skribbleControl').reply('set:currentSkribble', function( view ) {
         this.showChildView('current', view);
         this.model = view.model;
@@ -29,10 +36,11 @@ define([
           var fetched = parentSkribbleModel.fetch();
         }
         if ( this.model.get('children').length > 0 ) {
-          var children = this.model.get('children').models;
+          console.log(this.model.get('children'));
+          var children = this.model.get('children').models || this.model.get('children');
           var currentIndex = this.model.get('currentChild') || 0;
           var child = children[ currentIndex ];
-          var childSkribbleView = new CurrentSkribbleView({ model: child });
+          var childSkribbleView = new BaseSkribbleView({ model: child });
           this.showChildView('children', childSkribbleView );
           this.model.set('currentChild', 0);
         }
@@ -41,6 +49,7 @@ define([
     events: {
       'click .c-skribble-control__nav-next': 'showNext',
       'click .c-skribble-control__nav-prev': 'showPrev',
+      'click .c-skribble-control__select-child': 'selectChild'
     },
     showNext: function() {
       if ( this.model.get('currentChild') == this.model.get('children').models.length - 1 ) {
@@ -51,7 +60,7 @@ define([
       }
       var childIndex = this.model.get('currentChild');
       var nextModel = this.model.get('children').models[ childIndex ];
-      var nextView = new CurrentSkribbleView({ model: nextModel });
+      var nextView = new BaseSkribbleView({ model: nextModel });
       this.showChildView('children', nextView);
     },
     showPrev: function() {
@@ -62,8 +71,14 @@ define([
       }
       var childIndex = this.model.get('currentChild');
       var prevModel = this.model.get('children').models[ childIndex ];
-      var prevView = new CurrentSkribbleView({ model: prevModel });
+      var prevView = new BaseSkribbleView({ model: prevModel });
       this.showChildView('children', prevView);
+    },
+    selectChild: function() {
+      var currentChild = this.model.get('currentChild');
+      var childId = this.model.get('children').models[ currentChild ].get('_id');
+      console.log( childId );
+      Radio.channel('router').request('navigate', childId, true );
     }
   });
 

@@ -22,6 +22,18 @@ define([
       });
     },
     showSkribble: function( id ) {
+      var rootRendered = Radio.channel('root').request('isRendered');
+      var controlRendered = Radio.channel('skribbleControl').request('isRendered');
+      if ( rootRendered && controlRendered ) {
+        // See if model with id still exists under skribbleControl model
+        var currentChildModel = Radio.channel('skribbleControl').request('get:currentChild');
+        console.log( currentChildModel.toJSON() );
+        // if not set a model with URL
+        // Plug model into new view
+        var skribbleView = new CurrentSkribbleView({ model: currentChildModel });
+        // Pass view through radio to skribbleControl
+        Radio.channel('skribbleControl').request('set:currentSkribble', skribbleView);
+      }
     }
   };
   return MainController;
