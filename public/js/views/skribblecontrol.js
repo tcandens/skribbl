@@ -18,7 +18,7 @@ define([
     regions: {
       current: '.c-current-skribble',
       parent: '.c-parent-skribble',
-      children: '.c-children'
+      children: '.c-children-skribble'
     },
     initialize: function() {
       Radio.channel('skribbleControl').reply('isRendered', function() {
