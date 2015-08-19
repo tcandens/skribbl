@@ -21,9 +21,6 @@ define([
       Radio.channel('root').reply('isRendered', function() {
         return this._isRendered;
       }, this);
-    },
-    onRender: function() {
-      console.log( this );
     }
   });
   return RootView;

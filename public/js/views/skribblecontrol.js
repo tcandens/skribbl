@@ -25,21 +25,25 @@ define([
         return this._isRendered;
       }, this);
       Radio.channel('skribbleControl').reply('get:currentChild', function() {
-        return this.model.get('children').models[ this.model.get('currentChild') ];
+        var currentChild = this.model.get('children').models[ this.model.get('currentChild') ];
+        console.log( currentChild );
+        return currentChild;
       }, this);
       Radio.channel('skribbleControl').reply('set:currentSkribble', function( view ) {
         this.showChildView('current', view);
         this.model = view.model;
+        console.log( view.model );
+        console.log( this.model );
         if ( this.model.get('parent_skribbl') ) {
           var parentSkribbleModel = new SkribbleModel();
           parentSkribbleModel.url = this.model.get('parent_skribbl');
           var fetched = parentSkribbleModel.fetch();
         }
         if ( this.model.get('children').length > 0 ) {
-          console.log(this.model.get('children'));
-          var children = this.model.get('children').models || this.model.get('children');
+          var children = this.model.get('children');
           var currentIndex = this.model.get('currentChild') || 0;
-          var child = children[ currentIndex ];
+          console.log( children );
+          var child = children.at( currentIndex );
           var childSkribbleView = new BaseSkribbleView({ model: child });
           this.showChildView('children', childSkribbleView );
           this.model.set('currentChild', 0);

@@ -27,7 +27,8 @@ define([
       if ( rootRendered && controlRendered ) {
         // See if model with id still exists under skribbleControl model
         var currentChildModel = Radio.channel('skribbleControl').request('get:currentChild');
-        console.log( currentChildModel.toJSON() );
+        // For some reason, currentChildModel is being spit out with children as plain array instead of Backbone.Collection
+        console.log( currentChildModel );
         // if not set a model with URL
         // Plug model into new view
         var skribbleView = new CurrentSkribbleView({ model: currentChildModel });
