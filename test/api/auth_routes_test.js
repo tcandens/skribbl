@@ -4,14 +4,14 @@ var chai     = require('chai');
 var chaihttp = require('chai-http');
 var expect   = chai.expect;
 var mongoose = require('mongoose');
-var User     = require('../models/User.js');
+var User     = require('../../lib/models/User.js');
 chai.use(chaihttp);
 
 // Use test db
 process.env.MONGOLAB_URI = 'mongodb://localhost/skribbl_test';
 
 // Start api server for testing
-require('../server.js');
+require('../../server.js');
 
 
 describe('Authentication', function() {
