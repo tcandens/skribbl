@@ -9,12 +9,12 @@ define([
     controller: Controller,
     appRoutes: {
       '': 'index',
-      ':id': 'showSkribble'
+      'skribble/random': 'showRandomSkribble',
+      'skribble/:id': 'showSkribble'
     },
     initialize: function() {
       Radio.channel('router').reply('navigate', function( url, trigger ) {
         this.navigate( url, {trigger: trigger} );
-        console.log( 'Navigating!' );
       }, this);
     }
   });
