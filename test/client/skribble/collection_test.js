@@ -4,24 +4,37 @@ var expect = chai.expect;
 
 describe('Skribble Backbone Collection', function() {
 
-  var Backbone, SkribbleCollection;
+  var Backbone, SkribbleCollection, SkribbleModel;
+  var testCollection, testModel;
 
-  before(function(done) {
+  beforeEach(function(done) {
     require([
       'backbone',
-      'underscore',
-      'skribble/skribble_collection'
-    ], function( backbone, _, skribbleCollection ) {
+      'skribble/skribble_collection',
+      'skribble/skribble_model'
+    ], function( backbone, skribbleCollection, skribbleModel ) {
       Backbone = backbone;
       SkribbleCollection = skribbleCollection;
-      console.log('Whaaat');
+      SkribbleModel = skribbleModel;
+      testCollection = new skribbleCollection();
+      testModel = new skribbleModel();
       done();
     });
   });
 
-  it('should have a model property', function() {
-    var collection = new SkribbleCollection();
-    expect( collection ).to.be.instanceof( Backbone.Collection );
+  it('should have a model property', function(done) {
+    testModel.url = 'localhost:8000/api/storys/random';
+    testModel.fetch({
+      success: function( model, response, options ) {
+        expect( model ).to.exist;
+        console.log( model );
+        done();
+      },
+      error: function( collection, response, options ) {
+        expect.fail();
+        done();
+      }
+    });
   });
 
 });
