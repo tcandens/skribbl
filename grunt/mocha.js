@@ -1,8 +1,8 @@
 module.exports = {
   test: {
-    src: [ 'test/client/harness.html' ],
+    src: [ 'test/client/*/test-*.html' ],
     options: {
-      run: true
+      run: false
     }
   }
 }

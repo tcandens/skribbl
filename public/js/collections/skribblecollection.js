@@ -6,17 +6,18 @@ define([
   'use strict';
 
   var SkribbleCollection = Backbone.Collection.extend({
+    model: SkribbleModel,
     parse: function( data ) {
-      var freshData = [];
-      if ( _.isArray( data ) ) {
-        _.forEach( data, function(n) {
-          var skribbleModel = new SkribbleModel( n );
-          freshData.push( skribbleModel );
+      if ( _.isArray( data ) && data[0].children ) {
+        var freshData = [];
+        _.forEach( data.children, function( child ) {
+          var model = new SkribbleModel();
+          model.parse( child );
+          freshData.push( model );
         });
-      } else {
-        return data;
+        //return freshData;
+        return [ { turds: 'turds' } ];
       }
-      return freshData;
     }
   });
   return SkribbleCollection;
