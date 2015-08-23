@@ -2,13 +2,13 @@ define([
   'marionette',
   'backbone',
   'router',
-  'views/rootview'
+  'root/view'
 ], function( Marionette, Backbone, Router, RootView ) {
     'use strict';
 
     var App = Marionette.Application.extend({
-      rootView: new RootView(),
       onBeforeStart: function() {
+        this.rootView = new RootView();
         var router = new Router();
       },
       onStart: function() {

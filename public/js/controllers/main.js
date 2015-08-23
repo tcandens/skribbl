@@ -3,22 +3,23 @@ define([
   'backbone.radio',
   'underscore',
   'jquery',
-  'models/skribblemodel',
-  'views/currentskribble',
-  'views/skribblecontrol'
-], function( Marionette, Radio, _, $, SkribbleModel, CurrentSkribbleView, SkribbleControlView ) {
+  'skribble/collection',
+  'skribble/current/view',
+  'skribble/manager/view'
+], function( Marionette, Radio, _, $, SkribbleCollection, CurrentView, ManagerView ) {
   'use strict';
 
+  var ManagerChannel = Radio.channel('SkribbleManager');
   var MainController = {
     index: function() {
-      var controlView = new SkribbleControlView();
-      Radio.channel('root').request('set:content', controlView);
-      var skribbleModel = new SkribbleModel();
-      skribbleModel.url = '/api/storys/random';
-      var fetched = skribbleModel.fetch();
+      var managerView = new ManagerView();
+      Radio.channel('root').request('set:content', managerView);
+      var skribbleCollection = new SkribbleCollection();
+      skribbleCollection.url = '/api/storys/random';
+      var fetched = skribbleCollection.fetch();
       $.when( fetched ).then(function() {
-        var skribbleView = new CurrentSkribbleView({ model: skribbleModel });
-        Radio.channel('skribbleControl').request('set:currentSkribble', skribbleView);
+        ManagerChannel.request('set:collection', skribbleCollection);
+        ManagerChannel.request('build:all');
       });
     },
     showSkribble: function( id ) {

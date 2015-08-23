@@ -1,7 +1,7 @@
 define([
   'backbone',
   'underscore',
-  'collections/skribblecollection'
+  'skribble/collection'
 ], function( Backbone, _, SkribbleCollection ) {
   'use strict';
 

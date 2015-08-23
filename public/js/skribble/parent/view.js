@@ -1,7 +1,7 @@
 define([
   'marionette',
   'underscore',
-  'text!templates/baseskribble.html'
+  'text!skribble/parent/template.html'
 ], function( Marionette, _, template ) {
   'use strict';
   

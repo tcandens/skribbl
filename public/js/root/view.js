@@ -2,10 +2,12 @@ define([
   'marionette',
   'backbone.radio',
   'underscore',
-  'text!templates/rootview.html'
+  'text!root/template.html'
 ], function( Marionette, Radio, _, template ) {
   'use strict';
-  
+
+  var RootChannel = Radio.channel('root');
+
   var RootView = Marionette.LayoutView.extend({
     el: '#container',
     template: _.template( template ),
@@ -15,13 +17,14 @@ define([
       footer: '#footer'
     },
     initialize: function() {
-      Radio.channel('root').reply('set:content', function( contentView ) {
+      RootChannel.reply('set:content', function( contentView ) {
         this.getRegion('content').show( contentView );
       }, this);
-      Radio.channel('root').reply('isRendered', function() {
+      RootChannel.reply('isRendered', function() {
         return this._isRendered;
       }, this);
     }
   });
   return RootView;
 });
+

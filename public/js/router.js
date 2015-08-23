@@ -9,8 +9,8 @@ define([
     controller: Controller,
     appRoutes: {
       '': 'index',
-      'skribble/random': 'showRandomSkribble',
-      'skribble/:id': 'showSkribble'
+      //'skribble/random': 'showRandomSkribble',
+      //'skribble/:id': 'showSkribble'
     },
     initialize: function() {
       Radio.channel('router').reply('navigate', function( url, trigger ) {
