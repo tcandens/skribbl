@@ -8,11 +8,6 @@ define([
   var SkribbleModel = Backbone.Model.extend({
     idAttribute: '_id',
     urlRoot: '/api/skribbl',
-    parse: function( data ) {
-      console.log( 'Fetching model!' );
-      throw new Error();
-      return data;
-    },
     //parse: function( data ) {
       //var freshData = _.cloneDeep( data );
       //if ( freshData.children ) {

@@ -83,7 +83,7 @@ define([
             console.log( model );
             console.log('failure');
           }
-          child.fetch({ success, failure });
+          //child.fetch({ success, failure });
         }
         console.log('children exist');
       } else {
