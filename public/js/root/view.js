@@ -6,7 +6,7 @@ define([
 ], function( Marionette, Radio, _, template ) {
   'use strict';
 
-  var RootChannel = Radio.channel('root');
+  var RootChannel = Radio.channel('RootView');
 
   var RootView = Marionette.LayoutView.extend({
     el: '#container',

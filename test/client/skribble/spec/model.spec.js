@@ -2,7 +2,7 @@
 
 var expect = chai.expect;
 
-describe('Skribble Backbone Collection', function() {
+describe('Skribble Backbone Model', function() {
 
   var Backbone, SkribbleCollection, SkribbleModel;
 
@@ -18,22 +18,7 @@ describe('Skribble Backbone Collection', function() {
       done();
     });
 
-    this.collectionFetchResponse = [
-      {
-        _id: 42,
-        children: [
-          {
-            _id: 24,
-            children: [
-              {
-                _id: 1337,
-                children: null
-              }
-            ]
-          }
-        ]
-      }
-    ];
+    this.mockCollection = new SkribbleCollection( mockModels );
 
     // Setup Sinon Fake Server
     this.server = sinon.fakeServer.create();
@@ -44,17 +29,8 @@ describe('Skribble Backbone Collection', function() {
     done();
   });
 
-  it('should fetch and parse into nested models and collections', function(done) {
-    var testCollection = new SkribbleCollection();
-    this.server.respondWith( JSON.stringify( this.collectionFetchResponse ) )
-    testCollection.url = 'http://localhost:8000/api/storys/random';
-    testCollection.fetch();
-    this.server.respond();
-    console.log( testCollection )
-    expect( testCollection.at(0) ).to.be.instanceof( Backbone.Model );
-    expect( testCollection.at(0).get('children') ).to.be.instanceof( Backbone.Collection );
-    expect( testCollection.at(0).get('children').at(0).get('children') ).to.be.instanceof( Backbone.Collection );
-    done();
+  it('should find itself among parent collection', function( done ) {
+
   });
 
 });

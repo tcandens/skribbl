@@ -9,11 +9,13 @@ define([
 ], function( Marionette, Radio, _, $, SkribbleCollection, CurrentView, ManagerView ) {
   'use strict';
 
+  var RootChannel = Radio.channel('RootView');
   var ManagerChannel = Radio.channel('SkribbleManager');
+
   var MainController = {
     index: function() {
       var managerView = new ManagerView();
-      Radio.channel('root').request('set:content', managerView);
+      RootChannel.request('set:content', managerView);
       var skribbleCollection = new SkribbleCollection();
       skribbleCollection.url = '/api/storys/random';
       var fetched = skribbleCollection.fetch();
@@ -23,7 +25,7 @@ define([
       });
     },
     showSkribble: function( id ) {
-      var rootRendered = Radio.channel('root').request('isRendered');
+      var rootRendered = RootChannel.request('isRendered');
       var controlRendered = Radio.channel('skribbleControl').request('isRendered');
       if ( rootRendered && controlRendered ) {
         // See if model with id still exists under skribbleControl model

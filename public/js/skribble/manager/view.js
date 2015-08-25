@@ -13,6 +13,8 @@ define([
 
   var ManagerChannel = Radio.channel('SkribbleManager');
 
+  var stateModel = Backbone.Model.extend({});
+
   var SkribbleManagerView = Marionette.LayoutView.extend({
     tagName: 'section',
     className: 'c-skribble-manager',
@@ -23,8 +25,7 @@ define([
       children: '.c-children-skribble'
     },
     initialize: function() {
-      // Create View Model
-      this.state = new Backbone.Model.extend({});
+      this.state = new stateModel();
       ManagerChannel.reply('isRendered', function() {
         return this._isRendered;
       }, this);
@@ -41,9 +42,15 @@ define([
       'click .c-skribble-manager__select-child': 'selectChild'
     },
     buildAll: function() {
-      var currentIndex = this.state.get('current');
+      var currentIndex;
+      if ( this.state.get('current') ) {
+        currentIndex = this.state.get('current');
+      } else {
+        currentIndex = 0;
+        this.state.set('current', currentIndex);
+      }
       var currentModel = this.collection.at( currentIndex );
-      buildCurrent( currentModel );
+      this.buildCurrent( currentModel );
       return this;
     },
     buildCurrent: function( model ) {
