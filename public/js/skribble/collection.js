@@ -22,7 +22,7 @@ define([
               var collection = new SkribbleCollection( childrenArray );
               grandChild.set('children', collection);
             }
-          })
+          });
           skribble.children = childrenCollection;
         }
       });
