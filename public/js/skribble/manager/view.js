@@ -72,18 +72,12 @@ define([
     },
     selectChildren: function() {
       if ( this.getCurrent().get('children') ) {
+        // Make sure that any lazy fetched models have children parsed into collection
         var child = this.getCurrent().get('children').at( 0 );
         this.state.set('current', child);
         // if child does not have children, lazy fetch
         if ( !child.get('children') ) {
-          var success = function ( model, res, opt ) {
-            console.log( model );
-          }
-          var failure = function ( model, res, opt ) {
-            console.log( model );
-            console.log('failure');
-          }
-          //child.fetch({ success, failure });
+          this.getCurrent().fetch();
         }
         console.log('children exist');
       } else {

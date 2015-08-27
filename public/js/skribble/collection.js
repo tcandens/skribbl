@@ -5,7 +5,7 @@
 define([
   'backbone',
   'underscore',
-  'skribble/model'
+  'skribble/model',
 ], function( Backbone, _, SkribbleModel ) {
   'use strict';
 

@@ -1,13 +1,23 @@
 define([
   'backbone',
   'underscore',
-  'skribble/collection'
+  'skribble/collection',
 ], function( Backbone, _, SkribbleCollection ) {
   'use strict';
 
   var SkribbleModel = Backbone.Model.extend({
     idAttribute: '_id',
     urlRoot: '/api/skribbl',
+    initialize: function( options ) {
+      this.listenTo( this, 'sync', this.parseChildren );
+    },
+    parseChildren: function() {
+      var SkribbleCollection = require('skribble/collection');
+      var children = this.get('children');
+      console.log( SkribbleCollection )
+      var freshChildren = new SkribbleCollection( children );
+      this.set('children', freshChildren);
+    },
     //parse: function( data ) {
       //var freshData = _.cloneDeep( data );
       //if ( freshData.children ) {
