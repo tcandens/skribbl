@@ -28,7 +28,8 @@ define([
       // State.current holds pointer to current skribble within this.collection
       this.state = new stateModel();
       // Listen to change in current skribble on state model
-      this.listenTo( this.state, 'change:current', this.buildAll );
+      this.listenTo( this.state, 'change:current', this.buildCurrent );
+      this.listenTo( this.state, 'change:parent', this.buildParent );
       // Radio accessible bool for rendering flow
       ManagerChannel.reply('isRendered', function() {
         return this._isRendered;
@@ -52,6 +53,9 @@ define([
     getCurrent: function() {
       return this.state.get('current') || this.collection.at( 0 );
     },
+    setCurrent: function( model ) {
+      this.state.set('current', model);
+    },
     buildAll: function() {
       this.buildCurrent();
       this.buildParent();
@@ -63,29 +67,34 @@ define([
       return this;
     },
     buildParent: function() {
-      if ( this.getCurrent().get('parent_skribbl') ) {
-        console.log( 'Parent found!' );
-      } else {
-        console.log( 'No Parent' );
-      }
-      return this;
+      if ( !this.state.get('parent') ) return;
+      var parentModel = this.state.get('parent') || null;
+      var parentView = new ParentView({ model: parentModel })
+      this.showChildView('parent', parentView);
     },
     selectChildren: function() {
       if ( this.getCurrent().get('children') ) {
         // Make sure that any lazy fetched models have children parsed into collection
         var child = this.getCurrent().get('children').at( 0 );
-        this.state.set('current', child);
+        this.state.set('parent', this.getCurrent() );
+        this.setCurrent( child );
         // if child does not have children, lazy fetch
-        if ( !child.get('children') ) {
+        if ( this.getCurrent().get('children') ) {
           this.getCurrent().fetch();
         }
-        console.log('children exist');
       } else {
-        console.log('no children');
+        console.log('No Children');
       }
     },
     findNext: function() {
-      console.log('Find Next');
+      var nextModel = this.getCurrent().findNext();
+      this.setCurrent( nextModel );
+      return this;
+    },
+    findPrev: function() {
+      var prevModel = this.getCurrent().findPrev();
+      this.setCurrent( prevModel );
+      return this;
     }
   });
 
