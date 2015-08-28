@@ -7,8 +7,9 @@ define([
   'skribble/model',
   'skribble/current/view',
   'skribble/parent/view',
+  'skribble/new/view',
   'text!skribble/manager/template.html',
-], function( Marionette, _, $, Backbone, Radio, SkribbleModel, CurrentView, ParentView, template ) {
+], function( Marionette, _, $, Backbone, Radio, SkribbleModel, CurrentView, ParentView, NewSkribbleView, template ) {
   'use strict';
 
   var ManagerChannel = Radio.channel('SkribbleManager');
@@ -21,7 +22,11 @@ define([
     regions: {
       current: '.c-current-skribble',
       parent: '.c-parent-skribble',
-      children: '.c-children-skribble'
+      children: '.c-children-skribble',
+      new: '.c-new-skribble'
+    },
+    onRender: function() {
+      this.showChildView('new', new NewSkribbleView() );
     },
     initialize: function() {
       // State.current holds pointer to current skribble within this.collection
@@ -115,8 +120,23 @@ define([
       return this;
     },
     selectParent: function() {
-      var parentId = this.getCurrent().get('skribbl_parent');
-      var parentModel = new SkribbleModel({ _id: parentId });
+      if ( this.state.get('parent') ) {
+        this.setCurrent( this.state.get('parent') );
+        var parent = this.getCurrent().get('parent_skribbl');
+        var parentModel = new SkribbleModel({ _id: parent });
+        var fetched = parentModel.fetch();
+        $.when( fetched ).then(function() {
+          this.state.set('parent', parentModel);
+        }.bind(this));
+      } else {
+        console.log('No State Parent');
+        var parent = this.getCurrent().get('parent_skribbl');
+        var parentModel = new SkribbleModel({ _id: parent });
+        var fetched = parentModel.fetch();
+        $.when( fetched ).then(function() {
+          this.setCurrent( parentModel );
+        }.bind( this ));
+      }
     }
   });
 
