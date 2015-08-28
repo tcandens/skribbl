@@ -19,12 +19,12 @@ define([
     },
     findNext: function() {
       if ( this.collection ) {
-        return this.collection.at( this.collection.indexOf( this ) + 1 ) || this
+        return this.collection.at( this.collection.indexOf( this ) + 1 ) || null;
       }
     },
     findPrev: function() {
       if ( this.collection ) {
-        return this.collection.at( this.collection.indexOf( this ) - 1 ) || this;
+        return this.collection.at( this.collection.indexOf( this ) - 1 ) || null;
       }
     }
   });

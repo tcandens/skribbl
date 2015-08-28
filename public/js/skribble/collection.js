@@ -27,6 +27,10 @@ define([
         }
       });
       return freshData;
+    },
+    // Overright negative arguments feature
+    at: function( index ) {
+      return this.models[ index ];
     }
   });
   return SkribbleCollection;

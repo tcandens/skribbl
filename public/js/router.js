@@ -9,11 +9,11 @@ define([
     controller: Controller,
     appRoutes: {
       '': 'index',
-      //'skribble/random': 'showRandomSkribble',
-      //'skribble/:id': 'showSkribble'
+      'skribble/:id': 'showSkribble'
     },
     initialize: function() {
-      Radio.channel('router').reply('navigate', function( url, trigger ) {
+      Radio.channel('Router').reply('navigate', function( url, trigger ) {
+        var trigger = trigger || false;
         this.navigate( url, {trigger: trigger} );
       }, this);
     }
