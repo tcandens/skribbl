@@ -8,23 +8,12 @@ define([
   var SkribbleModel = Backbone.Model.extend({
     idAttribute: '_id',
     urlRoot: '/api/skribbl',
-    initialize: function( options ) {
-      this.listenTo( this, 'sync', this.parseChildren );
-    },
-    parseChildren: function() {
-      var SkribbleCollection = require('skribble/collection');
-      var children = this.get('children');
-      var freshChildren = new SkribbleCollection( children );
-      this.set('children', freshChildren);
-    },
-    findNext: function() {
-      if ( this.collection ) {
-        return this.collection.at( this.collection.indexOf( this ) + 1 ) || null;
-      }
-    },
-    findPrev: function() {
-      if ( this.collection ) {
-        return this.collection.at( this.collection.indexOf( this ) - 1 ) || null;
+    parse: function( data ) {
+      // If JSON returns an array, pick first object
+      if ( data.length === 1 ) {
+        return data[0];
+      } else {
+        return data;
       }
     }
   });

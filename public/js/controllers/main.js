@@ -17,14 +17,13 @@ define([
     index: function() {
       var managerView = new ManagerView();
       RootChannel.request('set:content', managerView);
-      var skribbleCollection = new SkribbleCollection();
-      skribbleCollection.url = '/api/storys/random';
-      var fetched = skribbleCollection.fetch();
+      var seedModel = new SkribbleModel();
+      seedModel.url = 'api/storys/random';
+      var fetched = seedModel.fetch();
       $.when( fetched ).then(function() {
         // Passes through fetched and parsed collection with
         // one model at the root & nested children
-        ManagerChannel.request('set:collection', skribbleCollection);
-        ManagerChannel.request('build:all');
+        ManagerChannel.request('set:seedModel', seedModel);
       });
     },
     showSkribble: function( id ) {

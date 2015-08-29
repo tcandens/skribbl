@@ -6,6 +6,9 @@ define([
   'use strict';
 
   var NewSkribbleView = Marionette.ItemView.extend({
+    initialize: function() {
+      console.log( this );
+    },
     template: _.template( template )
   });
   return NewSkribbleView;
