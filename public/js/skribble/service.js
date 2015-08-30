@@ -20,7 +20,19 @@ define([
       // Current reference
       var _current;
       // Parent reference, a stack of predecessors
-      var _parents = [];
+      var _parents = (function() {
+        var stack = [];
+        function _push( item ) {
+          stack.push( item );
+        }
+        function _pop() {
+          return stack.pop()
+        }
+        return {
+          push: _push,
+          pop: _pop
+        }
+      })();
       // Children reference, remains an array until loaded into siblings
       //
       // Helper function to package internal data a object to pass through
@@ -70,6 +82,7 @@ define([
 
       // Select children
       function _findChildren() {
+        // TEST IF THERE ARE CHILDREN;
         // 1. Move first child into current reference
         var children = _current.get('children') || null;
         var firstChild = children[0];
@@ -105,6 +118,7 @@ define([
 
       // Select Parent
       function _findParent() {
+        // TEST IF THERE IS A PARENT!
         // 1. Replace current ref with parent ref
         _current = _parents.pop();
         // 2. Search master collection for new parent_skribbl
