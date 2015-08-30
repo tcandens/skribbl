@@ -61,6 +61,8 @@ define([
     },
     selectParent: function() {
       // Request from SkribbleService singleton then build and display
+      var skribblePackage = this.service.findParent();
+      this.build( skribblePackage );
       // views with returned object
     }
   });

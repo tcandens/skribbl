@@ -27,7 +27,7 @@ define([
       var _package = function() {
         return {
           current: _current,
-          parent: _parents
+          parent: _parents[ _parents.length - 1 ]
         }
       }
 
@@ -90,7 +90,6 @@ define([
       // Find Next
       function _findNextSibling() {
         // 1. Search siblings collection for next model
-
         // 2. Replace current with found model
         // 3. If next does not exist
         // 4. RETURN: object with current reference to build view as event
@@ -107,11 +106,14 @@ define([
       // Select Parent
       function _findParent() {
         // 1. Replace current ref with parent ref
+        _current = _parents.pop();
         // 2. Search master collection for new parent_skribbl
+        var tempParent = _master.findWhere({ _id: _current.id });
         // 3. # if it does not exist: Create, fetch, and add to collection
         // 4. Replace parent ref with new parent from parent_skribbl
         // 5. Replace siblings with all children from parent minus current
         // 6. RETURN: object with current, parent models as event to build views
+        return _package();
       }
 
       // Add New
@@ -121,7 +123,8 @@ define([
 
       return {
         seedWith: _seed.bind( this ),
-        findChild: _findChildren.bind( this )
+        findChild: _findChildren.bind( this ),
+        findParent: _findParent.bind( this )
       };
     };
 
