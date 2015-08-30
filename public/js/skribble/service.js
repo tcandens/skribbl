@@ -6,6 +6,20 @@ define([
 ], function( $, Radio, SkribbleModel, SkribbleCollection ) {
   'use strict';
 
+  function Stack() {
+    var stack = [];
+    var top = 0;
+    var length = stack.length;
+    this.push = function( item ) {
+      stack[ top++ ] = item;
+    }
+    this.pop = function() {
+      top = top <= 0 ? 0 : top;
+      return stack[ top-- ];
+    }
+    this.peek = stack[ top ];
+  }
+
   var SkribbleService = (function () {
 
     var instance;
@@ -20,6 +34,7 @@ define([
       // Current reference
       var _current;
       // Parent reference, a stack of predecessors
+      //var _parents = new Stack();
       var _parents = (function() {
         var stack = [];
         function _push( item ) {
@@ -28,9 +43,13 @@ define([
         function _pop() {
           return stack.pop()
         }
+        function _peek() {
+          return stack[ stack.length - 1 ];
+        }
         return {
           push: _push,
-          pop: _pop
+          pop: _pop,
+          peek: _peek
         }
       })();
       // Children reference, remains an array until loaded into siblings
@@ -39,7 +58,7 @@ define([
       var _package = function() {
         return {
           current: _current,
-          parent: _parents[ _parents.length - 1 ]
+          parent: _parents.peek()
         }
       }
 
@@ -47,7 +66,7 @@ define([
       function _seed( model, callback ) {
         // Seed with first model & emit event
         // 1. Add model to collection
-        _master.add( model );
+        _master.add( model, { reset: true } );
         // 2. Add model to current
         _current = model;
         // 3. Fetch parent model from parent_skribbl id
@@ -85,15 +104,17 @@ define([
         // TEST IF THERE ARE CHILDREN;
         // 1. Move first child into current reference
         var children = _current.get('children') || null;
-        var firstChild = children[0];
+        // If children === null, push error
         // 2. Move current reference to parent stack
         _parents.push( _current );
         // 3. Reset siblings collection & move any other children into siblings
         _siblings.add( children, {reset: true} );
-        _current = _siblings.shift();
+        _current = _siblings.at( 0 );
+        console.log( _siblings );
         // 4. Sync current to load more children
         var fetched = _current.fetch();
         $.when( fetched ).then(function() {
+          _master.add( children, {merge: true} );
           console.log('children fetched');
         })
         //vent.request('ready', _package() );
@@ -103,17 +124,23 @@ define([
       // Find Next
       function _findNextSibling() {
         // 1. Search siblings collection for next model
+        var nextSibling = _siblings.at( _siblings.indexOf( _current ) + 1 );
         // 2. Replace current with found model
         // 3. If next does not exist
+        _current = nextSibling || _current;
         // 4. RETURN: object with current reference to build view as event
+        return _package();
       }
 
       // Find Prev
       function _findPreviousSibling() {
         // 1. Search siblings collection for previous model
+        var previousSibling = _siblings.at( _siblings.indexOf( _current ) - 1 );
         // 2. Replace current with found model
         // 3. If previoux does not exist, RETURN: current
+        _current = previousSibling || _current;
         // 4. RETURN: object with current reference as event to build view
+        return _package();
       }
 
       // Select Parent
@@ -138,7 +165,9 @@ define([
       return {
         seedWith: _seed.bind( this ),
         findChild: _findChildren.bind( this ),
-        findParent: _findParent.bind( this )
+        findParent: _findParent.bind( this ),
+        findNext: _findNextSibling.bind( this ),
+        findPrevious: _findPreviousSibling.bind( this )
       };
     };
 

@@ -43,27 +43,24 @@ define([
       var parentView = new ParentSkribbleView({ model: skribblePackage.parent });
       if ( skribblePackage.current ) this.showChildView('current', currentView);
       if ( skribblePackage.parent ) this.showChildView('parent', parentView);
+      if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
       return this;
     },
     selectChildren: function() {
-      // Request from SkribbleService singleton then build and display
       var skribblePackage = this.service.findChild();
       this.build( skribblePackage );
-      // views with returned object
     },
     findNext: function() {
-      // Request from SkribbleService singleton then build and display
-      // views with returned object
+      var skribblePackage = this.service.findNext();
+      this.build( skribblePackage );
     },
     findPrev: function() {
-      // Request from SkribbleService singleton then build and display
-      // views with returned object
+      var skribblePackage = this.service.findPrevious();
+      this.build( skribblePackage );
     },
     selectParent: function() {
-      // Request from SkribbleService singleton then build and display
       var skribblePackage = this.service.findParent();
       this.build( skribblePackage );
-      // views with returned object
     }
   });
 

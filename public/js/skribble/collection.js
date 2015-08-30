@@ -6,7 +6,11 @@ define([
   'use strict';
 
   var SkribbleCollection = Backbone.Collection.extend({
-    model: SkribbleModel
+    model: SkribbleModel,
+    // Over-write weird at method
+    at: function( index ) {
+      return this.models[ index ] || undefined;
+    }
   });
   return SkribbleCollection;
 });
