@@ -1,8 +1,7 @@
 define([
   'backbone',
   'underscore',
-  'skribble/collection',
-], function( Backbone, _, SkribbleCollection ) {
+], function( Backbone, _ ) {
   'use strict';
 
   var SkribbleModel = Backbone.Model.extend({

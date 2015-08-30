@@ -3,15 +3,15 @@ define([
   'backbone.radio',
   'underscore',
   'jquery',
-  'skribble/collection',
+  'skribble/service',
   'skribble/model',
-  'skribble/current/view',
   'skribble/manager/view'
-], function( Marionette, Radio, _, $, SkribbleCollection, SkribbleModel, CurrentView, ManagerView ) {
+], function( Marionette, Radio, _, $, SkribbleService, SkribbleModel, ManagerView ) {
   'use strict';
 
   var RootChannel = Radio.channel('RootView');
   var ManagerChannel = Radio.channel('SkribbleManager');
+  var service = SkribbleService.getInstance();
 
   var MainController = {
     index: function() {
@@ -21,9 +21,7 @@ define([
       seedModel.url = 'api/storys/random';
       var fetched = seedModel.fetch();
       $.when( fetched ).then(function() {
-        // Passes through fetched and parsed collection with
-        // one model at the root & nested children
-        ManagerChannel.request('set:seedModel', seedModel);
+        service.seedWith( seedModel )
       });
     },
     showSkribble: function( id ) {
@@ -32,13 +30,10 @@ define([
         var managerView = new ManagerView();
         RootChannel.request('set:content', managerView);
       }
-      var skribbleCollection = new SkribbleCollection();
-      var skribbleModel = new SkribbleModel({ _id: id });
-      skribbleCollection.add( skribbleModel );
-      var fetched = skribbleModel.fetch();
+      var seedModel = new SkribbleModel({ _id: id });
+      var fetched = seedModel.fetch();
       $.when( fetched ).then(function() {
-        ManagerChannel.request('set:collection', skribbleCollection);
-        ManagerChannel.request('build:all');
+        service.seedWith( seedModel );
       });
     }
   };
