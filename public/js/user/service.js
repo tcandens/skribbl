@@ -12,22 +12,53 @@ define([
 
     var vent = Radio.channel('UserService');
 
+    var config = {
+      cookieName: 'eat',
+    }
+
     function initService() {
 
-      var user;
+      var user = {
+        isAuthenticated: false
+      };
 
       // Create User
       function createUser( email, password, username ) {
 
       }
       // LOGIN
-      function login( email, password ) {
+      function login( email, password, callback ) {
+        var authString = 'Basic ';
+        authString += base64.encode( email + ':' + password );
+        //authString += btoa( email + ':' + password );
+        console.log( authString );
 
+        $.ajax({
+          type: 'GET',
+          url: 'api/login',
+          dataType: 'json',
+          beforeSend: function( xhr ) {
+            xhr.setRequestHeader( 'Authorization', authString );
+          }
+        })
+          .done(function ( data, status, xhr ) {
+            // Set Cookies!
+            cookies.set( config.cookieName, data.eat );
+            // Set User and isAuthenticated
+            user.isAuthenticated = true;
+            user.email = email;
+            user.token = data.eat;
+            // Emit event?
+            if ( typeof callback === 'function' ) callback( null, user );
+          })
+          .fail(function ( xhr, status, error ) {
+            // Emit event?
+            if ( typeof callback === 'function' ) callback( error, user );
+          })
       }
 
       // isAuthenticated
       function isAuthenticated() {
-
       }
 
       // getCredentials

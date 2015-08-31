@@ -7,6 +7,8 @@ define([
 ], function( Marionette, _, $, UserService, template ) {
   'use strict';
 
+  var service = UserService.getInstance();
+
   var LoginView = Marionette.ItemView.extend({
     tagName: 'aside',
     template: _.template( template ),
@@ -20,23 +22,18 @@ define([
       'submit @ui.form': 'submitForm'
     },
     submitForm: function( e ) {
+      console.log( e );
       e.preventDefault();
-
-
-      var authString = base64.encode( this.ui.username.val() + ':' + this.ui.password.val() );
-
-      $.ajax({
-        type: 'GET',
-        url: 'api/login',
-        beforeSend: function( xhr ) {
-          xhr.setRequestHeader( 'Authorization', 'Basic ' + authString )
-        },
-        success: function( data, status, xhr ) {
-          console.log( data );
-          console.log( xhr );
-        },
-        dataType: 'json'
-      });
+      var username = this.ui.username.val();
+      var password = this.ui.password.val();
+      service.login(
+        username,
+        password,
+        function( error, user ) {
+          if ( error ) console.log( 'There was an error: ' + error );
+          console.log( user );
+        }
+      );
     }
   });
   return LoginView;

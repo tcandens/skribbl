@@ -20,6 +20,7 @@ define([
     this.peek = stack[ top ];
   }
 
+  // TODO: Consider Async Callback Based Versions of these methods
   var SkribbleService = (function () {
 
     var instance;
