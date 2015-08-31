@@ -1,7 +1,8 @@
 define([
   'backbone',
+  'jquery',
   'underscore',
-], function( Backbone, _ ) {
+], function( Backbone, $, _ ) {
   'use strict';
 
   var SkribbleModel = Backbone.Model.extend({
@@ -14,6 +15,16 @@ define([
       } else {
         return data;
       }
+    },
+    asyncFetch: function( callback ) {
+      var fetched = this.fetch();
+      $.when( fetched )
+        .done(function() {
+          if ( typeof callback === 'function' ) callback( this );
+        }.bind( this ))
+        .fail(function() {
+          console.log('Model fetch failed.');
+        })
     }
   });
   return SkribbleModel;

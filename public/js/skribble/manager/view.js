@@ -11,6 +11,7 @@ define([
 
   var ManagerChannel = Radio.channel('SkribbleManager');
   var ServiceChannel = Radio.channel('SkribbleService');
+  var RouterChannel = Radio.channel('Router');
 
   var SkribbleManagerView = Marionette.LayoutView.extend({
     tagName: 'section',
@@ -27,6 +28,10 @@ define([
       this.service = SkribbleService.getInstance();
       // Listen to service event on seeded to build first views
       ServiceChannel.reply('seeded', this.build, this);
+      // Global method to test if manager is rendered
+      ManagerChannel.reply('isRendered', function() {
+        return this._isRendered;
+      }, this );
     },
     onRender: function() {
       this.showChildView('new', new NewSkribbleView() );
@@ -38,7 +43,7 @@ define([
       'click .c-skribble-manager__select-parent': 'selectParent'
     },
     build: function( skribblePackage ) {
-      console.log( skribblePackage );
+      //console.log( skribblePackage );
       var currentView = new CurrentSkribbleView({ model: skribblePackage.current });
       var parentView = new ParentSkribbleView({ model: skribblePackage.parent });
       if ( skribblePackage.current ) this.showChildView('current', currentView);
@@ -46,21 +51,29 @@ define([
       if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
       return this;
     },
+    navigate: function( skribblePackage ) {
+      var id = skribblePackage.current.get('id');
+      RouterChannel.request('navigate', id);
+    },
     selectChildren: function() {
       var skribblePackage = this.service.findChild();
       this.build( skribblePackage );
+      this.navigate( skribblePackage );
     },
     findNext: function() {
       var skribblePackage = this.service.findNext();
       this.build( skribblePackage );
+      this.navigate( skribblePackage );
     },
     findPrev: function() {
       var skribblePackage = this.service.findPrevious();
       this.build( skribblePackage );
+      this.navigate( skribblePackage );
     },
     selectParent: function() {
       var skribblePackage = this.service.findParent();
       this.build( skribblePackage );
+      this.navigate( skribblePackage );
     }
   });
 

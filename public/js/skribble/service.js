@@ -41,15 +41,23 @@ define([
           stack.push( item );
         }
         function _pop() {
-          return stack.pop()
+          return stack.pop();
         }
         function _peek() {
           return stack[ stack.length - 1 ];
         }
+        function _length() {
+          return stack.length;
+        }
+        function _clear() {
+          stack = [];
+        }
         return {
           push: _push,
           pop: _pop,
-          peek: _peek
+          peek: _peek,
+          length: _length,
+          clear: _clear
         }
       })();
       // Children reference, remains an array until loaded into siblings
@@ -77,10 +85,10 @@ define([
           parentModel = new SkribbleModel({ _id: parentId });
           var fetched = parentModel.fetch();
           $.when( fetched ).then(function() {
-            _parent = parentModel;
-            var children = parentModel.get('children') || [];
+           _parents.push( parentModel );
+            var siblings = parentModel.get('children') || [];
             // 4. Any children returned from parent fetch are loaded to siblings, minus current
-            _siblings = new SkribbleCollection( children );
+            _siblings = new SkribbleCollection( siblings );
             if ( typeof callback === 'function' ) {
               callback ( _package() );
             } else {
@@ -97,27 +105,25 @@ define([
         }
       }
 
-      // Get current?
-
       // Select children
       function _findChildren() {
-        // TEST IF THERE ARE CHILDREN;
-        // 1. Move first child into current reference
-        var children = _current.get('children') || null;
-        // If children === null, push error
-        // 2. Move current reference to parent stack
+        // TEST IF THERE ARE CHILDREN
+        var children = _current.get('children') || undefined;
+        if ( !children ) {
+          console.log('no children');
+          return _package();
+        }
         _parents.push( _current );
+        console.log( _parents.length() );
         // 3. Reset siblings collection & move any other children into siblings
-        _siblings.add( children, {reset: true} );
+        _siblings.reset();
+        _siblings.add( children );
         _current = _siblings.at( 0 );
-        console.log( _siblings );
         // 4. Sync current to load more children
         var fetched = _current.fetch();
         $.when( fetched ).then(function() {
           _master.add( children, {merge: true} );
-          console.log('children fetched');
         })
-        //vent.request('ready', _package() );
         return _package();
       }
 
@@ -146,15 +152,39 @@ define([
       // Select Parent
       function _findParent() {
         // TEST IF THERE IS A PARENT!
-        // 1. Replace current ref with parent ref
-        _current = _parents.pop();
-        // 2. Search master collection for new parent_skribbl
-        var tempParent = _master.findWhere({ _id: _current.id });
-        // 3. # if it does not exist: Create, fetch, and add to collection
-        // 4. Replace parent ref with new parent from parent_skribbl
-        // 5. Replace siblings with all children from parent minus current
-        // 6. RETURN: object with current, parent models as event to build views
-        return _package();
+        if ( _parents.length() <= 0 ) {
+          // Check if _current.parent_skribbl exists
+          var parentId = _current.get('parent_skribbl') || undefined;
+          // If it does create model and fetch it
+          if ( parentId ) {
+            var parentModel = new SkribbleModel({ id: parentId });
+            var fetched = parentModel.fetch();
+            $.when( fetched ).then(function() {
+              _current = parentModel;
+              var gParentId = parentModel.get('parent_skribbl') || undefined;
+              if ( gParentId ) {
+                // Further parent needs to be fetched and its children bound to current siblings
+              } else {
+                console.log( 'Root skribble was fetched' );
+                _parents.clear();
+                return _package();
+              }
+            });
+          } else {
+            console.log( 'Root skribble!' );
+            return _package();
+          }
+          // Else return package
+        } else {
+          console.log( 'Parent Stack Not Empty!' );
+          _current = _parents.pop();
+          // Reset siblings
+          _siblings.reset();
+          _current.asyncFetch(function( model ) {
+            _siblings.add( model.get('children') );
+          })
+          return _package();
+        }
       }
 
       // Add New

@@ -25,7 +25,7 @@ define([
       });
     },
     showSkribble: function( id ) {
-      var controlRendered = Radio.channel('skribbleControl').request('isRendered');
+      var controlRendered = ManagerChannel.request('isRendered');
       if ( !controlRendered ) {
         var managerView = new ManagerView();
         RootChannel.request('set:content', managerView);
