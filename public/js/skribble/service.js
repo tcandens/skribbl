@@ -28,14 +28,14 @@ define([
 
     function initService() {
       // A private master collection?
-      var _master = new SkribbleCollection();
+      var master = new SkribbleCollection();
       // Siblings collection
-      var _siblings = new SkribbleCollection();
+      var siblings = new SkribbleCollection();
       // Current reference
-      var _current;
+      var current;
       // Parent reference, a stack of predecessors
       //var _parents = new Stack();
-      var _parents = (function() {
+      var parents = (function() {
         var stack = [];
         function _push( item ) {
           stack.push( item );
@@ -65,18 +65,18 @@ define([
       // Helper function to package internal data a object to pass through
       var _package = function() {
         return {
-          current: _current,
-          parent: _parents.peek()
+          current: current,
+          parent: parents.peek()
         }
       }
 
       // ACTIONS
-      function _seed( model, callback ) {
+      function seed( model, callback ) {
         // Seed with first model & emit event
         // 1. Add model to collection
-        _master.add( model, { reset: true } );
+        master.add( model, { reset: true } );
         // 2. Add model to current
-        _current = model;
+        current = model;
         // 3. Fetch parent model from parent_skribbl id
         var parentModel;
         var parentId = model.get('parent_skribbl') || null;
@@ -84,10 +84,10 @@ define([
         if ( parentId ) {
           parentModel = new SkribbleModel({ _id: parentId });
           parentModel.asyncFetch(function( fetchedModel ) {
-           _parents.push( fetchedModel );
+           parents.push( fetchedModel );
             var siblings = fetchedModel.get('children') || [];
             // 4. Any children returned from parent fetch are loaded to siblings, minus current
-            _siblings = new SkribbleCollection( siblings );
+            siblings = new SkribbleCollection( siblings );
             if ( typeof callback === 'function' ) {
               callback ( _package() );
             } else {
@@ -105,22 +105,22 @@ define([
       }
 
       // Select children
-      function _findChildren() {
+      function findChildren() {
         // TEST IF THERE ARE CHILDREN
-        var children = _current.get('children') || undefined;
+        var children = current.get('children') || undefined;
         if ( !children ) {
           console.log('no children');
           return _package();
         }
-        _parents.push( _current );
-        console.log( _parents.length() );
+        parents.push( current );
+        console.log( parents.length() );
         // 3. Reset siblings collection & move any other children into siblings
-        _siblings.reset();
-        _siblings.add( children );
-        _current = _siblings.at( 0 );
+        siblings.reset();
+        siblings.add( children );
+        current = siblings.at( 0 );
         // 4. Sync current to load more children
-        var fetched = _current.fetch();
-        //_current.asyncFetch(function( fetched) {
+        var fetched = current.fetch();
+        //current.asyncFetch(function( fetched) {
         // Adding to master, not yet needed
         //$.when( fetched ).then(function() {
           //_master.add( children, {merge: true} );
@@ -129,44 +129,44 @@ define([
       }
 
       // Find Next
-      function _findNextSibling() {
+      function findNextSibling() {
         // 1. Search siblings collection for next model
-        var nextSibling = _siblings.at( _siblings.indexOf( _current ) + 1 );
+        var nextSibling = siblings.at( siblings.indexOf( current ) + 1 );
         // 2. Replace current with found model
         // 3. If next does not exist
-        _current = nextSibling || _current;
+        current = nextSibling || current;
         // 4. RETURN: object with current reference to build view as event
         return _package();
       }
 
       // Find Prev
-      function _findPreviousSibling() {
+      function findPreviousSibling() {
         // 1. Search siblings collection for previous model
-        var previousSibling = _siblings.at( _siblings.indexOf( _current ) - 1 );
+        var previousSibling = siblings.at( siblings.indexOf( current ) - 1 );
         // 2. Replace current with found model
         // 3. If previoux does not exist, RETURN: current
-        _current = previousSibling || _current;
+        current = previousSibling || current;
         // 4. RETURN: object with current reference as event to build view
         return _package();
       }
 
       // Select Parent
-      function _findParent() {
+      function findParent() {
         // TEST IF THERE IS A PARENT!
-        if ( _parents.length() <= 0 ) {
+        if ( parents.length() <= 0 ) {
           // Check if _current.parent_skribbl exists
-          var parentId = _current.get('parent_skribbl') || undefined;
+          var parentId = current.get('parent_skribbl') || undefined;
           // If it does create model and fetch it
           if ( parentId ) {
             var parentModel = new SkribbleModel({ id: parentId });
             parentModel.asyncFetch(function( fetched ) {
-              _current = fetched;
+              current = fetched;
               var gParentId = fetched.get('parent_skribbl') || undefined;
               if ( gParentId ) {
                 // Further parent needs to be fetched and its children bound to current siblings
               } else {
                 console.log( 'Root skribble was fetched' );
-                _parents.clear();
+                parents.clear();
                 return _package();
               }
             });
@@ -177,18 +177,18 @@ define([
           // Else return package
         } else {
           console.log( 'Parent Stack Not Empty!' );
-          _current = _parents.pop();
+          current = parents.pop();
           // Reset siblings
-          _siblings.reset();
-          if ( _parents.peek() ) {
+          siblings.reset();
+          if ( parents.peek() ) {
             // Grab siblings from existing parent stack
-            _siblings.add( _parents.peek().get('children') );
+            siblings.add( parents.peek().get('children') );
           }
-          var parentId = _current.get('parent_skribbl') || undefined;
+          var parentId = current.get('parent_skribbl') || undefined;
           if ( parentId ) {
             var parentModel = new SkribbleModel({ id: parentId });
             parentModel.asyncFetch(function( model ) {
-              _siblings.add( model.get('children') );
+              siblings.add( model.get('children') );
             });
           }
           return _package();
@@ -201,11 +201,11 @@ define([
       // 2. Add model to collection, replace
 
       return {
-        seedWith: _seed.bind( this ),
-        findChild: _findChildren.bind( this ),
-        findParent: _findParent.bind( this ),
-        findNext: _findNextSibling.bind( this ),
-        findPrevious: _findPreviousSibling.bind( this )
+        seedWith: seed.bind( this ),
+        findChild: findChildren.bind( this ),
+        findParent: findParent.bind( this ),
+        findNext: findNextSibling.bind( this ),
+        findPrevious: findPreviousSibling.bind( this )
       };
     };
 

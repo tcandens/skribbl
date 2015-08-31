@@ -2,9 +2,9 @@ define([
   'marionette',
   'underscore',
   'jquery',
-  'base64',
+  'user/service',
   'text!user/login/template.html'
-], function( Marionette, _, $, base64, template ) {
+], function( Marionette, _, $, UserService, template ) {
   'use strict';
 
   var LoginView = Marionette.ItemView.extend({
@@ -21,6 +21,7 @@ define([
     },
     submitForm: function( e ) {
       e.preventDefault();
+
 
       var authString = base64.encode( this.ui.username.val() + ':' + this.ui.password.val() );
 
