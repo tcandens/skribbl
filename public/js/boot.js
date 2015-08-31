@@ -9,6 +9,7 @@ requirejs.config({
     'backbone.radio': '../../vendor/backbone.radio/build/backbone.radio',
     'marionette.radio': 'marionette.radio',
     'text': '../vendor/requirejs-text/text',
+    'base64': '../vendor/base-64/base64'
   },
   map: {
     '*': {

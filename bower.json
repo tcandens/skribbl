@@ -22,6 +22,7 @@
     "backbone.radio": "~1.0.0",
     "requirejs-text": "~2.0.14",
     "requirejs-html": "~1.2.0",
-    "normalize-scss": "~3.0.3"
+    "normalize-scss": "~3.0.3",
+    "base-64": "~0.1.0"
   }
 }
