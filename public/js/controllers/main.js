@@ -19,9 +19,8 @@ define([
       RootChannel.request('set:content', managerView);
       var seedModel = new SkribbleModel();
       seedModel.url = 'api/storys/random';
-      var fetched = seedModel.fetch();
-      $.when( fetched ).then(function() {
-        service.seedWith( seedModel )
+      seedModel.asyncFetch(function( fetched ) {
+        service.seedWith( fetched )
       });
     },
     showSkribble: function( id ) {
@@ -31,9 +30,8 @@ define([
         RootChannel.request('set:content', managerView);
       }
       var seedModel = new SkribbleModel({ _id: id });
-      var fetched = seedModel.fetch();
-      $.when( fetched ).then(function() {
-        service.seedWith( seedModel );
+      seedModel.asyncFetch(function( fetched ) {
+        service.seedWith( fetched );
       });
     }
   };

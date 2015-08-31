@@ -83,10 +83,9 @@ define([
         // if there is a parent_skribbl, fetch it
         if ( parentId ) {
           parentModel = new SkribbleModel({ _id: parentId });
-          var fetched = parentModel.fetch();
-          $.when( fetched ).then(function() {
-           _parents.push( parentModel );
-            var siblings = parentModel.get('children') || [];
+          parentModel.asyncFetch(function( fetchedModel ) {
+           _parents.push( fetchedModel );
+            var siblings = fetchedModel.get('children') || [];
             // 4. Any children returned from parent fetch are loaded to siblings, minus current
             _siblings = new SkribbleCollection( siblings );
             if ( typeof callback === 'function' ) {
@@ -121,9 +120,11 @@ define([
         _current = _siblings.at( 0 );
         // 4. Sync current to load more children
         var fetched = _current.fetch();
-        $.when( fetched ).then(function() {
-          _master.add( children, {merge: true} );
-        })
+        //_current.asyncFetch(function( fetched) {
+        // Adding to master, not yet needed
+        //$.when( fetched ).then(function() {
+          //_master.add( children, {merge: true} );
+        //})
         return _package();
       }
 
@@ -158,10 +159,9 @@ define([
           // If it does create model and fetch it
           if ( parentId ) {
             var parentModel = new SkribbleModel({ id: parentId });
-            var fetched = parentModel.fetch();
-            $.when( fetched ).then(function() {
-              _current = parentModel;
-              var gParentId = parentModel.get('parent_skribbl') || undefined;
+            parentModel.asyncFetch(function( fetched ) {
+              _current = fetched;
+              var gParentId = fetched.get('parent_skribbl') || undefined;
               if ( gParentId ) {
                 // Further parent needs to be fetched and its children bound to current siblings
               } else {
@@ -180,9 +180,17 @@ define([
           _current = _parents.pop();
           // Reset siblings
           _siblings.reset();
-          _current.asyncFetch(function( model ) {
-            _siblings.add( model.get('children') );
-          })
+          if ( _parents.peek() ) {
+            // Grab siblings from existing parent stack
+            _siblings.add( _parents.peek().get('children') );
+          }
+          var parentId = _current.get('parent_skribbl') || undefined;
+          if ( parentId ) {
+            var parentModel = new SkribbleModel({ id: parentId });
+            parentModel.asyncFetch(function( model ) {
+              _siblings.add( model.get('children') );
+            });
+          }
           return _package();
         }
       }

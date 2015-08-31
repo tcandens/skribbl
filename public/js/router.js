@@ -5,15 +5,18 @@ define([
 ], function( Marionette, Controller, Radio ) {
   'use strict';
 
+  var RouterChannel = Radio.channel('Router');
+
   var Router = Marionette.AppRouter.extend({
     controller: Controller,
     appRoutes: {
       '': 'index',
+      'skribble/random': 'index',
       'skribble/:id': 'showSkribble'
     },
     initialize: function() {
-      Radio.channel('Router').reply('navigate', function( url, trigger ) {
-        var trigger = trigger || false;
+      RouterChannel.reply('navigate', function( url, options ) {
+        var trigger = options.trigger || false;
         this.navigate( url, {trigger: trigger} );
       }, this);
     }

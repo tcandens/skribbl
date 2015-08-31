@@ -43,17 +43,19 @@ define([
       'click .c-skribble-manager__select-parent': 'selectParent'
     },
     build: function( skribblePackage ) {
-      //console.log( skribblePackage );
+      // Unclear conditional structure
       var currentView = new CurrentSkribbleView({ model: skribblePackage.current });
       var parentView = new ParentSkribbleView({ model: skribblePackage.parent });
       if ( skribblePackage.current ) this.showChildView('current', currentView);
       if ( skribblePackage.parent ) this.showChildView('parent', parentView);
       if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
+      this.navigate( skribblePackage );
       return this;
     },
     navigate: function( skribblePackage ) {
-      var id = skribblePackage.current.get('id');
-      RouterChannel.request('navigate', id);
+      var id = skribblePackage.current.get('_id');
+      var url = 'skribble/' + id;
+      RouterChannel.request('navigate', url, { trigger: false });
     },
     selectChildren: function() {
       var skribblePackage = this.service.findChild();
