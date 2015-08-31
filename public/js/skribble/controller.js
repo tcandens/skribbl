@@ -1,19 +1,17 @@
 define([
   'marionette',
   'backbone.radio',
-  'underscore',
-  'jquery',
   'skribble/service',
   'skribble/model',
   'skribble/manager/view'
-], function( Marionette, Radio, _, $, SkribbleService, SkribbleModel, ManagerView ) {
+], function( Marionette, Radio, SkribbleService, SkribbleModel, ManagerView ) {
   'use strict';
 
   var RootChannel = Radio.channel('RootView');
   var ManagerChannel = Radio.channel('SkribbleManager');
   var service = SkribbleService.getInstance();
 
-  var MainController = {
+  var SkribbleController = {
     index: function() {
       var managerView = new ManagerView();
       RootChannel.request('set:content', managerView);
@@ -35,5 +33,5 @@ define([
       });
     }
   };
-  return MainController;
+  return SkribbleController;
 });

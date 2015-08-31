@@ -2,14 +2,16 @@ define([
   'marionette',
   'backbone',
   'router',
+  'skribble/router',
   'root/view'
-], function( Marionette, Backbone, Router, RootView ) {
+], function( Marionette, Backbone, BaseRouter, SkribbleRouter, RootView ) {
     'use strict';
 
     var App = Marionette.Application.extend({
       onBeforeStart: function() {
         this.rootView = new RootView();
-        var router = new Router();
+        var baseRouter = new BaseRouter();
+        var skribbleRouter = new SkribbleRouter();
       },
       onStart: function() {
         this.rootView.render();
