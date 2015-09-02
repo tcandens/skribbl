@@ -2,23 +2,13 @@ define([
   'jquery',
   'backbone.radio',
   'skribble/model',
-  'skribble/collection'
-], function( $, Radio, SkribbleModel, SkribbleCollection ) {
+  'skribble/collection',
+  'user/service',
+  'base64'
+], function( $, Radio, SkribbleModel, SkribbleCollection, UserService, base64 ) {
   'use strict';
 
-  function Stack() {
-    var stack = [];
-    var top = 0;
-    var length = stack.length;
-    this.push = function( item ) {
-      stack[ top++ ] = item;
-    }
-    this.pop = function() {
-      top = top <= 0 ? 0 : top;
-      return stack[ top-- ];
-    }
-    this.peek = stack[ top ];
-  }
+  var userService = UserService.getInstance();
 
   // TODO: Consider Async Callback Based Versions of these methods
   var SkribbleService = (function () {
@@ -121,11 +111,6 @@ define([
         current = siblings.at( 0 );
         // 4. Sync current to load more children
         var fetched = current.fetch();
-        //current.asyncFetch(function( fetched) {
-        // Adding to master, not yet needed
-        //$.when( fetched ).then(function() {
-          //_master.add( children, {merge: true} );
-        //})
         return _package();
       }
 
@@ -197,6 +182,28 @@ define([
       }
 
       // Add New
+      function createSkribble( skribble, callback ) {
+        userService.credentials(function( user ) {
+
+          var currentId = current.get('id') || current.get('_id') || undefined;
+          var skribbleModel = current.clone().unset('_id').unset('id');
+          skribbleModel.set({
+            'eat': user.token,
+            'parent_skribbl': currentId,
+            'author': user.username,
+            'content': skribble.content
+          });
+          skribbleModel.save({
+            success: callback,
+            failure: function( model, response, options ) {
+              console.log('Could not create skribble');
+            }
+          });
+
+          console.log( user.token );
+          console.log( current.get('_id') );
+        });
+      }
       // 1. Accepts object or attributes to be turned into model
       // 2. Merge attr with current skribbl _id to be used as skribbl_parent
       // 2. Add model to collection, replace
@@ -206,7 +213,8 @@ define([
         findChild: findChildren.bind( this ),
         findParent: findParent.bind( this ),
         findNext: findNextSibling.bind( this ),
-        findPrevious: findPreviousSibling.bind( this )
+        findPrevious: findPreviousSibling.bind( this ),
+        createSkribble: createSkribble.bind( this )
       };
     };
 

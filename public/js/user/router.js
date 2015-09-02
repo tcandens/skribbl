@@ -7,7 +7,8 @@ define([
   var UserRouter = Marionette.AppRouter.extend({
     controller: Controller,
     appRoutes: {
-      'user/login': 'login'
+      'user/login': 'login',
+      'user/create': 'create'
     }
   });
   return UserRouter;

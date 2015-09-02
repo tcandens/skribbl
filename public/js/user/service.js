@@ -22,19 +22,42 @@ define([
         isAuthenticated: false
       };
 
-      // Create User
-      function createUser( email, password, username ) {
+      function startCheck() {
+        var userCookie = cookies.getJSON( config.cookieName ) || undefined;
+        if ( userCookie ) {
+          // fetch user info
+          user.token = userCookie.token;
+          user.email = userCookie.email;
+          user.isAuthenticated = true;
+          // Emit Event
+          vent.request('user', user);
+          console.log( user );
+        }
+      }
 
+      // Create User
+      function createUser( userObject, callback ) {
+        $.ajax({
+          method: 'POST',
+          url: 'api/users',
+          data: JSON.stringify( userObject ),
+          dataType: 'json',
+          contentType: 'application/json'
+        })
+          .done(function ( data, status, xhr ) {
+            if ( typeof callback === 'function' ) callback( null, data );
+          })
+          .fail(function ( xhr, status, error ) {
+            if ( typeof callback === 'function' ) callback( error, xhr );
+          });
       }
       // LOGIN
       function login( email, password, callback ) {
         var authString = 'Basic ';
         authString += base64.encode( email + ':' + password );
-        //authString += btoa( email + ':' + password );
-        console.log( authString );
 
         $.ajax({
-          type: 'GET',
+          method: 'GET',
           url: 'api/login',
           dataType: 'json',
           beforeSend: function( xhr ) {
@@ -43,11 +66,18 @@ define([
         })
           .done(function ( data, status, xhr ) {
             // Set Cookies!
-            cookies.set( config.cookieName, data.eat );
+            var tempCookie = {
+              token: data.eat,
+              email: data.email,
+              username: data.username
+            }
+            cookies.set( config.cookieName, tempCookie );
+            console.log( tempCookie );
             // Set User and isAuthenticated
             user.isAuthenticated = true;
-            user.email = email;
+            user.email = data.email;
             user.token = data.eat;
+            user.username = data.username;
             // Emit event?
             if ( typeof callback === 'function' ) callback( null, user );
           })
@@ -59,11 +89,16 @@ define([
 
       // isAuthenticated
       function isAuthenticated() {
+        return user.isAuthenticated;
       }
 
       // getCredentials
-      function getCredentials() {
-
+      function getCredentials( callback ) {
+        if ( user.isAuthenticated ) {
+          if ( typeof callback === 'function' ) callback( user );
+        } else {
+          console.log( 'Is not authenticated' );
+        }
       }
 
       // LOGOUT
@@ -71,13 +106,15 @@ define([
 
       }
 
+      startCheck();
+
       // Return Public Functions Object
       return {
         login: login.bind( this ),
         logout: logout.bind( this ),
         isAuthenticated: isAuthenticated.bind( this ),
         credentials: getCredentials.bind( this ),
-        createUser: createUser.bind( this )
+        createUser: createUser.bind( this ),
       }
 
     }
