@@ -17,13 +17,14 @@ define([
       }
     },
     asyncFetch: function( callback ) {
+      var self = this;
       var fetched = this.fetch();
       $.when( fetched )
-        .done(function() {
-          if ( typeof callback === 'function' ) callback( this );
-        }.bind( this ))
-        .fail(function() {
-          console.log('Model fetch failed.');
+        .done(function( data, status, xhr ) {
+          if ( typeof callback === 'function' ) callback( self );
+        })
+        .fail(function( xhr, status, error ) {
+          console.log( error );
         })
     }
   });
