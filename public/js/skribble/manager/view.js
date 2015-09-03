@@ -55,7 +55,7 @@ define([
     navigate: function( skribblePackage ) {
       var id = skribblePackage.current.get('_id');
       var url = 'skribble/' + id;
-      RouterChannel.request('navigate', url, { trigger: false });
+      RouterChannel.request('navigate', url, { trigger: false, replace: true });
     },
     selectChildren: function() {
       var skribblePackage = this.service.findChild();
@@ -73,9 +73,11 @@ define([
       this.navigate( skribblePackage );
     },
     selectParent: function() {
-      var skribblePackage = this.service.findParent();
-      this.build( skribblePackage );
-      this.navigate( skribblePackage );
+      this.service.findParent(function( skribblePackage ) {
+        this.build( skribblePackage );
+        this.navigate( skribblePackage );
+        console.log( skribblePackage );
+      }.bind( this ));
     }
   });
 

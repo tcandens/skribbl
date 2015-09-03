@@ -10,12 +10,8 @@ define([
   var BaseRouter = Marionette.AppRouter.extend({
     initialize: function() {
       RouterChannel.reply('navigate', function( url, options ) {
-        var defaults = {
-          trigger: false
-        }
-        var options = _.extend( defaults, options );
-        console.log( options );
-        this.navigate( url, {trigger: options.trigger} );
+        var options = _.extend({ trigger: false, replace: false }, options );
+        this.navigate( url, options );
       }, this);
     }
   });

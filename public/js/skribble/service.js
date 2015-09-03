@@ -137,7 +137,7 @@ define([
       }
 
       // Select Parent
-      function findParent() {
+      function findParent( callback ) {
         // TEST IF THERE IS A PARENT!
         if ( parents.length() <= 0 ) {
           // Check if _current.parent_skribbl exists
@@ -150,15 +150,26 @@ define([
               var gParentId = fetched.get('parent_skribbl') || undefined;
               if ( gParentId ) {
                 // Further parent needs to be fetched and its children bound to current siblings
+                var gParentModel = new SkribbleModel({ id: gParentId });
+                gParentModel.asyncFetch(function( fetched ) {
+                  parent = fetched;
+                  siblings.reset();
+                  siblings.add( fetched.children );
+                  if ( typeof callback === 'function' ) {
+                    callback( _package() );
+                  }
+                })
               } else {
-                console.log( 'Root skribble was fetched' );
                 parents.clear();
-                return _package();
+                if ( typeof callback === 'function' ) {
+                  callback( _package() );
+                }
               }
             });
           } else {
-            console.log( 'Root skribble!' );
-            return _package();
+            if ( typeof callback === 'function' ) {
+              callback( _package() );
+            }
           }
           // Else return package
         } else {
@@ -177,14 +188,14 @@ define([
               siblings.add( model.get('children') );
             });
           }
-          return _package();
+          if ( typeof callback === 'function' ) {
+            callback( _package() );
+          }
         }
       }
 
-      // Add New
       function createSkribble( skribble, callback ) {
         userService.credentials(function( user ) {
-
           var currentId = current.get('id') || current.get('_id') || undefined;
           var skribbleModel = current.clone().unset('_id').unset('id');
           skribbleModel.set({
@@ -204,9 +215,6 @@ define([
           console.log( current.get('_id') );
         });
       }
-      // 1. Accepts object or attributes to be turned into model
-      // 2. Merge attr with current skribbl _id to be used as skribbl_parent
-      // 2. Add model to collection, replace
 
       return {
         seedWith: seed.bind( this ),

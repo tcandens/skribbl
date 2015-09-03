@@ -6,6 +6,7 @@ define([
 ], function( $, Radio, base64, cookies ) {
   'use strict';
 
+  var RouterChannel = Radio.channel('Router');
   // Singleton Service For User login, sessions, and auth
   var UserService = (function () {
     var instance;
@@ -28,8 +29,8 @@ define([
           // fetch user info
           user.token = userCookie.token;
           user.email = userCookie.email;
-          user.isAuthenticated = true;
-          // Emit Event
+          user.username = userCookie.username;
+          user.isAuthenticate = true;
           vent.request('user', user);
           console.log( user );
         }
@@ -97,6 +98,7 @@ define([
         if ( user.isAuthenticated ) {
           if ( typeof callback === 'function' ) callback( user );
         } else {
+          RouterChannel.request('navigate', 'user/login', {trigger: true, replace: false});
           console.log( 'Is not authenticated' );
         }
       }
