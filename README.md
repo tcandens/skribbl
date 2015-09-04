@@ -1,6 +1,6 @@
 # Skribble
-## A branching tree of creative writing
-------------------------------------------
+A branching tree of creative writing
+----------------------------------------------------------
 Backend forked from https://github.com/clintonjnelson/skribbl
 
 ### Install & Run
