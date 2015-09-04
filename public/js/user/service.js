@@ -112,11 +112,11 @@ define([
 
       // Return Public Functions Object
       return {
-        login: login.bind( this ),
-        logout: logout.bind( this ),
-        isAuthenticated: isAuthenticated.bind( this ),
-        credentials: getCredentials.bind( this ),
-        createUser: createUser.bind( this ),
+        login: login,
+        logout: logout,
+        isAuthenticated: isAuthenticated,
+        credentials: getCredentials,
+        createUser: createUser,
       }
 
     }

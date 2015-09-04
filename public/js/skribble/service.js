@@ -61,7 +61,6 @@ define([
         }
       }
 
-      // ACTIONS
       function seed( model, callback ) {
         // Seed with first model & emit event
         // 1. Add model to collection
@@ -75,10 +74,10 @@ define([
         if ( parentId ) {
           parentModel = new SkribbleModel({ _id: parentId });
           parentModel.asyncFetch(function( fetchedModel ) {
-           parents.push( fetchedModel );
-            var siblings = fetchedModel.get('children') || [];
+            parents.push( fetchedModel );
+            var siblingsArray = fetchedModel.get('children') || [];
             // 4. Any children returned from parent fetch are loaded to siblings, minus current
-            siblings = new SkribbleCollection( siblings );
+            siblings.add( siblingsArray, {reset: true} );
             if ( typeof callback === 'function' ) {
               callback ( _package() );
             } else {
@@ -216,13 +215,24 @@ define([
         });
       }
 
+      function _getState() {
+        return {
+          current: current,
+          parent: parents.peek(),
+          siblings: siblings
+        }
+      }
+
+      // #PUBLIC methods
       return {
-        seedWith: seed.bind( this ),
-        findChild: findChildren.bind( this ),
-        findParent: findParent.bind( this ),
-        findNext: findNextSibling.bind( this ),
-        findPrevious: findPreviousSibling.bind( this ),
-        createSkribble: createSkribble.bind( this )
+        seedWith: seed,
+        findChild: findChildren,
+        findParent: findParent,
+        findNext: findNextSibling,
+        findPrevious: findPreviousSibling,
+        createSkribble: createSkribble,
+        // Internal methods useful for testing and inspecting
+        _state: _getState
       };
     };
 
@@ -233,6 +243,9 @@ define([
           instance = initService();
         }
         return instance;
+      },
+      _clear: function() {
+        instance = undefined;
       }
     }
 

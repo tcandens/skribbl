@@ -44,7 +44,7 @@ describe('Skribble Backbone Collection', function() {
     done();
   });
 
-  it('should fetch and parse into nested models and collections', function(done) {
+  it.skip('should fetch and parse into nested models and collections', function(done) {
     var testCollection = new SkribbleCollection();
     this.server.respondWith( JSON.stringify( this.collectionFetchResponse ) )
     testCollection.url = 'http://localhost:8000/api/storys/random';
