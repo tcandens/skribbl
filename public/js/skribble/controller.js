@@ -40,7 +40,7 @@ define([
     traceSkribble: function( id ) {
       var skribbleCollection = new SkribbleCollection();
       skribbleCollection.url = 'api/skribbl/trace/' + id;
-      var listView = new SKribbleListView({ collection: skribbleCollection });
+      var listView = new SkribbleListView({ collection: skribbleCollection });
       var fetched = skribbleCollection.fetch();
       $.when( fetched ).then(function() {
         RootChannel.request('set:content', listView);

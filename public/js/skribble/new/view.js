@@ -22,7 +22,7 @@ define([
       var skribbleContent = this.ui.content.val();
       service.createSkribble({
         content: skribbleContent
-      })
+      });
     }
   });
   return NewSkribbleView;
