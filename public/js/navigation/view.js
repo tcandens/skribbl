@@ -8,6 +8,7 @@ define([
   'use strict';
 
   var RouterChannel = Radio.channel('Router');
+  var UserChannel = Radio.channel('UserService');
 
   var service = UserService.getInstance();
 
@@ -23,16 +24,26 @@ define([
       'click @ui.randomLink': 'randomSkribble',
       'click @ui.profileLink': 'profile'
     },
-    toggleLogin: function() {
-      if ( service.isAuthenticated() ) {
+    initialize: function() {
+      UserChannel.reply('user', function( user ) {
+        this.toggleLogin( user );
+      }, this)
+    },
+    toggleLogin: function( user ) {
+      if ( user.isAuthenticated ) {
         this.ui.loginLink.hide();
+        this.ui.logoutLink.hide();
+        this.ui.profileLink.show();
       } else {
+        this.ui.loginLink.show();
         this.ui.logoutLink.hide();
         this.ui.profileLink.hide();
       }
     },
     onBeforeShow: function() {
-      this.toggleLogin();
+      service.credentials(function( user ) {
+        this.toggleLogin( user );
+      }.bind( this ))
     },
     login: function( e ) {
       e.preventDefault();

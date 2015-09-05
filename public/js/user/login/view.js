@@ -15,12 +15,6 @@ define([
   var LoginView = Marionette.ItemView.extend({
     tagName: 'aside',
     template: _.template( template ),
-    initialize: function( options ) {
-      ServiceChannel.reply('user', function( user ) {
-        alert('Email: ' + user.email );
-        console.log('Hello!');
-      }, this );
-    },
     ui: {
       username: 'input[type=text]',
       password: 'input[type=password]',

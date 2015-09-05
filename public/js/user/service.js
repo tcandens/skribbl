@@ -41,7 +41,6 @@ define([
               user.username = userCookie.username;
               user.isAuthenticated = true;
               vent.request('user', user);
-              console.log( status );
             })
             .fail(function( xhr, status, error ) {
               // Status 401 Unauthorized, clear expired cookie
@@ -61,9 +60,11 @@ define([
         })
           .done(function ( data, status, xhr ) {
             if ( typeof callback === 'function' ) callback( null, data );
+            vent.request('user', user);
           })
           .fail(function ( xhr, status, error ) {
             if ( typeof callback === 'function' ) callback( error, xhr );
+            vent.request('user', user);
           });
       }
       // LOGIN
@@ -95,10 +96,12 @@ define([
             user.username = data.username;
             // Emit event?
             if ( typeof callback === 'function' ) callback( null, user );
+            vent.request('user', user);
           })
           .fail(function ( xhr, status, error ) {
             // Emit event?
             if ( typeof callback === 'function' ) callback( error, user );
+            vent.request('user', user);
           })
       }
 
@@ -111,8 +114,10 @@ define([
       function getCredentials( callback ) {
         if ( user.isAuthenticated ) {
           if ( typeof callback === 'function' ) callback( user );
+          vent.request('user', user);
         } else {
           RouterChannel.request('navigate', 'user/login', {trigger: true, replace: false});
+          vent.request('user', user);
           console.log( 'Is not authenticated' );
         }
       }

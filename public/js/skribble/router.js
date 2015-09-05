@@ -9,7 +9,8 @@ define([
     appRoutes: {
       '': 'index',
       'skribble/random': 'index',
-      'skribble/:id': 'showSkribble'
+      'skribble/:id': 'showSkribble',
+      'skribble/:id/trace': 'traceSkribble'
     }
   });
   return SkribbleRouter;
