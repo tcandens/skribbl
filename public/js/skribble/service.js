@@ -143,13 +143,13 @@ define([
           var parentId = current.get('parent_skribbl') || undefined;
           // If it does create model and fetch it
           if ( parentId ) {
-            var parentModel = new SkribbleModel({ id: parentId });
+            var parentModel = new SkribbleModel({ _id: parentId });
             parentModel.asyncFetch(function( fetched ) {
               current = fetched;
               var gParentId = fetched.get('parent_skribbl') || undefined;
               if ( gParentId ) {
                 // Further parent needs to be fetched and its children bound to current siblings
-                var gParentModel = new SkribbleModel({ id: gParentId });
+                var gParentModel = new SkribbleModel({ _id: gParentId });
                 gParentModel.asyncFetch(function( fetched ) {
                   parent = fetched;
                   siblings.reset();

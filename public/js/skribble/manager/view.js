@@ -5,13 +5,15 @@ define([
   'skribble/new/view',
   'skribble/current/view',
   'skribble/parent/view',
+  'user/service',
   'text!skribble/manager/template.html'
-], function( Marionette, Radio, SkribbleService, NewSkribbleView, CurrentSkribbleView, ParentSkribbleView, template ) {
+], function( Marionette, Radio, SkribbleService, NewSkribbleView, CurrentSkribbleView, ParentSkribbleView, UserService, template ) {
   'use strict';
 
   var ManagerChannel = Radio.channel('SkribbleManager');
   var ServiceChannel = Radio.channel('SkribbleService');
   var RouterChannel = Radio.channel('Router');
+  var userService = UserService.getInstance();
 
   var SkribbleManagerView = Marionette.LayoutView.extend({
     tagName: 'section',
@@ -34,7 +36,9 @@ define([
       }, this );
     },
     onRender: function() {
-      this.showChildView('new', new NewSkribbleView() );
+      if ( userService.isAuthenticated() ) {
+        this.showChildView('new', new NewSkribbleView() );
+      }
     },
     events: {
       'click .c-skribble-manager__nav-next': 'findNext',

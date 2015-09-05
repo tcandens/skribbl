@@ -8,7 +8,8 @@ define([
     controller: Controller,
     appRoutes: {
       'user/login': 'login',
-      'user/create': 'create'
+      'user/create': 'create',
+      'user/profile': 'profile'
     }
   });
   return UserRouter;

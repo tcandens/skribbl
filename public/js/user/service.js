@@ -26,13 +26,27 @@ define([
       function startCheck() {
         var userCookie = cookies.getJSON( config.cookieName ) || undefined;
         if ( userCookie ) {
-          // fetch user info
-          user.token = userCookie.token;
-          user.email = userCookie.email;
-          user.username = userCookie.username;
-          user.isAuthenticate = true;
-          vent.request('user', user);
-          console.log( user );
+          // Test token freshness
+          $.ajax({
+            method: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            url: 'api/token',
+            data: JSON.stringify({ eat: userCookie.token })
+          })
+            .done(function( data, status, xhr ) {
+              // Status returns with 200
+              user.token = userCookie.token;
+              user.email = userCookie.email;
+              user.username = userCookie.username;
+              user.isAuthenticated = true;
+              vent.request('user', user);
+              console.log( status );
+            })
+            .fail(function( xhr, status, error ) {
+              // Status 401 Unauthorized, clear expired cookie
+              cookies.remove( config.cookieName );
+            });
         }
       }
 

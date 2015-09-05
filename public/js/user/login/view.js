@@ -25,10 +25,15 @@ define([
       username: 'input[type=text]',
       password: 'input[type=password]',
       submit: 'input[type=submit]',
-      form: 'form.c-login-form'
+      form: 'form.c-login-form',
+      signUp: 'a#signup-link'
     },
     events: {
-      'submit @ui.form': 'submitForm'
+      'submit @ui.form': 'submitForm',
+      'click @ui.signUp': function( e ) {
+        e.preventDefault();
+        RouterChannel.request('navigate', 'user/create', {trigger: true, replace:false});
+      }
     },
     submitForm: function( e ) {
       console.log( e );

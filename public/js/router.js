@@ -13,7 +13,7 @@ define([
         var options = _.extend({ trigger: false, replace: false }, options );
         this.navigate( url, options );
       }, this);
-    }
+    },
   });
 
   return BaseRouter;

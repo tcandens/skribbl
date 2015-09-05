@@ -2,10 +2,9 @@ define([
   'marionette',
   'backbone.radio',
   'underscore',
-  'error/model',
-  'error/view',
+  'navigation/view',
   'text!root/template.html'
-], function( Marionette, Radio, _, ErrorModel, ErrorView, template ) {
+], function( Marionette, Radio, _, NavView, template ) {
   'use strict';
 
   var RootChannel = Radio.channel('RootView');
@@ -26,12 +25,10 @@ define([
       RootChannel.reply('isRendered', function() {
         return this._isRendered;
       }, this);
-      RootChannel.reply('set:error', function( error ) {
-        var errorModel = new ErrorModel({ message: error });
-        var errorView = new ErrorView({ model: errorModel });
-        console.log( errorView.render().el )
-        this.getRegion('errors').show( errorView );
-      }, this);
+    },
+    onRender: function() {
+      var navView = new NavView();
+      this.showChildView('nav', navView);
     }
   });
   return RootView;

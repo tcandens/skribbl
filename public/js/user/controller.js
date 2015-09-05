@@ -2,8 +2,9 @@ define([
   'marionette',
   'backbone.radio',
   'user/login/view',
-  'user/create/view'
-], function( Marionette, Radio, LoginView, CreateView ) {
+  'user/create/view',
+  'user/profile/view'
+], function( Marionette, Radio, LoginView, CreateView, ProfileView ) {
   'use strict';
 
   var RootChannel = Radio.channel('RootView');
@@ -16,6 +17,10 @@ define([
     create: function() {
       var createView = new CreateView();
       RootChannel.request('set:content', createView);
+    },
+    profile: function() {
+      var profileView = new ProfileView();
+      RootChannel.request('set:content', profileView);
     }
   };
   return UserController;
