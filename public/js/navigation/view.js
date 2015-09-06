@@ -48,7 +48,6 @@ define([
     login: function( e ) {
       e.preventDefault();
       RouterChannel.request('navigate', 'user/login', {trigger:true, replace:false});
-      console.log('LOGIN!');
     },
     profile: function() {
       RouterChannel.request('navigate', 'user/profile', {trigger: true});

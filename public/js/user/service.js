@@ -88,7 +88,6 @@ define([
               username: data.username
             }
             cookies.set( config.cookieName, tempCookie );
-            console.log( tempCookie );
             // Set User and isAuthenticated
             user.isAuthenticated = true;
             user.email = data.email;

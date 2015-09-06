@@ -30,7 +30,6 @@ define([
       }
     },
     submitForm: function( e ) {
-      console.log( e );
       e.preventDefault();
       var username = this.ui.username.val();
       var password = this.ui.password.val();

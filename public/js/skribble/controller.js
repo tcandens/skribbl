@@ -25,11 +25,6 @@ define([
       });
     },
     showSkribble: function( id ) {
-      //var controlRendered = ManagerChannel.request('isRendered');
-      //if ( !controlRendered ) {
-        //var managerView = new ManagerView();
-        //RootChannel.request('set:content', managerView);
-      //}
       var managerView = new ManagerView();
       RootChannel.request('set:content', managerView);
       var seedModel = new SkribbleModel({ _id: id });

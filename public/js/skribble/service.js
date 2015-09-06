@@ -203,15 +203,14 @@ define([
             'author': user.username,
             'content': skribble.content
           });
-          skribbleModel.save({
-            success: callback,
-            failure: function( model, response, options ) {
+          skribbleModel.save(null, {
+            success: function( model, response, options ) {
+              if ( typeof callback === 'function' ) callback( response );
+            },
+            error: function( model, response, options ) {
               console.log('Could not create skribble');
             }
           });
-
-          console.log( user.token );
-          console.log( current.get('_id') );
         });
       }
 

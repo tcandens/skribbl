@@ -1,10 +1,13 @@
 define([
   'marionette',
   'underscore',
+  'backbone.radio',
   'skribble/service',
   'text!skribble/new/template.html'
-], function( Marionette, _, SkribbleService, template ) {
+], function( Marionette, _, Radio, SkribbleService, template ) {
   'use strict';
+
+  var RouterChannel = Radio.channel('Router');
 
   var service = SkribbleService.getInstance();
 
@@ -22,6 +25,9 @@ define([
       var skribbleContent = this.ui.content.val();
       service.createSkribble({
         content: skribbleContent
+      }, function( response ) {
+        var path = 'skribble/' + response.id + '/trace';
+        RouterChannel.request('navigate', path, {trigger: true});
       });
     }
   });
