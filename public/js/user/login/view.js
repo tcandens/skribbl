@@ -19,7 +19,7 @@ define([
       username: 'input[type=text]',
       password: 'input[type=password]',
       submit: 'input[type=submit]',
-      form: 'form.c-login-form',
+      form: 'form#login-form',
       signUp: 'a#signup-link'
     },
     events: {

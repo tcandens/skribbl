@@ -1,7 +1,7 @@
 module.exports = {
   sass: {
     files: 'public/sass/**/*.scss',
-    tasks: ['sass']
+    tasks: ['build']
   },
   scripts: {
     files: 'public/js/**/*.js',

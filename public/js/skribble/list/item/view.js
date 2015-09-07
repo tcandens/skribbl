@@ -10,17 +10,23 @@ define([
 
   var SkribbleListItemView = Marionette.ItemView.extend({
     tagName: 'article',
-    className: 'list-item',
+    className: 'card row text-center p-a-lg',
     template: _.template( template ),
     ui: {
-      id: '.skribble-id'
+      view: '.show-skribble',
+      read: '.show-story'
     },
     events: {
-      'click @ui.id': 'gotoSkribble'
+      'click @ui.view': 'viewSkribble',
+      'click @ui.read': 'readSkribble'
     },
-    gotoSkribble: function() {
+    viewSkribble: function() {
       var route = 'skribble/' + this.model.get('_id');
       RouterChannel.request('navigate', route, {trigger:true, replace: false});
+    },
+    readSkribble: function() {
+      var route = 'skribble/' + this.model.get('_id') + '/trace';
+      RouterChannel.request('navigate', route, {trigger:true});
     }
   });
   return SkribbleListItemView;

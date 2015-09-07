@@ -1,7 +1,13 @@
-<ul>
-  <li class="skribble-id"><%= _id %></li>
-  <li><%= content %></li>
-  <li><%= created_at %></li>
-  <li><%= story_name %></li>
-  <li><%= parent_skribbl %></li>
-</ul>
+<div class="col-md-8 card-block">
+  <p class="lead card-text"><%= content %></p>
+</div>
+<div class="col-md-4">
+  <h6 class="card-title skribble-id"><%= _id %></h6>
+  <span><%= created_at %></span>
+  <span><%= story_name %></span>
+  <span><%= parent_skribbl %></span>
+  <div class="row">
+    <button class="show-skribble btn-primary btn btn-lg">View</button>
+    <button class="show-story btn btn-secondary btn-lg">Read</button>
+  </div>
+</div>

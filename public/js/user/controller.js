@@ -8,11 +8,13 @@ define([
   'use strict';
 
   var RootChannel = Radio.channel('RootView');
+  var NavChannel = Radio.channel('Navigation');
 
   var UserController = {
     login: function() {
       var loginView = new LoginView();
       RootChannel.request('set:content', loginView);
+      NavChannel.request('active', 'login');
     },
     create: function() {
       var createView = new CreateView();

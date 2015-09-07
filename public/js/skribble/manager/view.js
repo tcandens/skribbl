@@ -17,13 +17,12 @@ define([
 
   var SkribbleManagerView = Marionette.LayoutView.extend({
     tagName: 'section',
-    className: 'c-skribble-manager',
+    className: 'c-skribble-manager col-sm-12 col-lg-4 col-lg-offset-4',
     template: _.template( template ),
     regions: {
-      current: '.c-current-skribble',
-      parent: '.c-parent-skribble',
-      children: '.c-children-skribble',
-      new: '.c-new-skribble'
+      current: '.current-container',
+      parent: '.parent-container',
+      new: '.new-container'
     },
     initialize: function( options ) {
       // Attach instance of SkribbleService for requesting skribble data
@@ -40,11 +39,17 @@ define([
         this.showChildView('new', new NewSkribbleView() );
       }
     },
+    ui: {
+      next: '.ui-next-button',
+      prev: '.ui-prev-button',
+      children: '.ui-children-button',
+      parent: '.ui-parent-button'
+    },
     events: {
-      'click .c-skribble-manager__nav-next': 'findNext',
-      'click .c-skribble-manager__nav-prev': 'findPrev',
-      'click .c-skribble-manager__select-child': 'selectChildren',
-      'click .c-skribble-manager__select-parent': 'selectParent'
+      'click @ui.next': 'findNext',
+      'click @ui.prev': 'findPrev',
+      'click @ui.children': 'selectChildren',
+      'click @ui.parent': 'selectParent'
     },
     build: function( skribblePackage ) {
       // Unclear conditional structure

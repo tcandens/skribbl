@@ -6,6 +6,7 @@
   ],
   "build": [
     "sass",
+    "postcss:dist",
     "eslint"
   ],
   "test": [

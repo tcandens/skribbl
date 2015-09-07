@@ -8,7 +8,8 @@ define([
   'use strict';
 
   var SkribbleListView = Marionette.CollectionView.extend({
-    childView: ItemView
+    childView: ItemView,
+    className: 'm-a'
   });
   return SkribbleListView;
 });

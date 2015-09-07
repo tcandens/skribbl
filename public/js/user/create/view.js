@@ -13,6 +13,7 @@ define([
 
   var CreateUserView = Marionette.ItemView.extend({
     template: _.template( template ),
+    className: 'col-sm-12 col-lg-4 col-lg-offset-4',
     ui: {
       email: '.ui-email',
       username: '.ui-username',

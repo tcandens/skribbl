@@ -7,7 +7,7 @@ define([
 
   var CurrentSkribbleView = Marionette.ItemView.extend({
     tagName: 'article',
-    className: 'c-current-skribble',
+    className: 'current-skribble',
     template: _.template( template ),
   });
   return CurrentSkribbleView;

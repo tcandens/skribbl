@@ -7,7 +7,6 @@ define([
   var SkribbleRouter = Marionette.AppRouter.extend({
     controller: Controller,
     appRoutes: {
-      '': 'index',
       'skribble/random': 'index',
       'skribble/:id': 'showSkribble',
       'skribble/:id/trace': 'traceSkribble'
