@@ -17,7 +17,7 @@ define([
 
   var SkribbleManagerView = Marionette.LayoutView.extend({
     tagName: 'section',
-    className: 'c-skribble-manager col-sm-12 col-lg-4 col-lg-offset-4',
+    className: 'c-skribble-manager center-block',
     template: _.template( template ),
     regions: {
       current: '.current-container',
