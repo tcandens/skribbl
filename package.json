@@ -1,6 +1,6 @@
 {
   "name": "Skribble",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Stories built from user contributions.",
   "main": "server.js",
   "scripts": {
@@ -23,6 +23,18 @@
     "url": "https://github.com/tcandens/skribbl/issues"
   },
   "devDependencies": {
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.12.4",
+    "eat": "^0.1.1",
+    "express": "^4.12.3",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "lodash": "^3.8.0",
+    "lorem-ipsum": "^1.0.1",
+    "mongoose": "^4.0.3",
+    "passport": "^0.2.1",
+    "passport-http": "^0.2.2",
     "autoprefixer": "^6.0.1",
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
@@ -43,16 +55,5 @@
     "mocha": "^2.2.5",
     "sinon": "^1.16.1"
   },
-  "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.12.4",
-    "eat": "^0.1.1",
-    "express": "^4.12.3",
-    "grunt-contrib-requirejs": "^0.4.4",
-    "lodash": "^3.8.0",
-    "lorem-ipsum": "^1.0.1",
-    "mongoose": "^4.0.3",
-    "passport": "^0.2.1",
-    "passport-http": "^0.2.2"
-  }
+  "engines": "0.12.2"
 }
