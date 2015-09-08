@@ -19,7 +19,7 @@ var populateRouter = express.Router();
 process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'setThisVarInENV';
 
 // Connect mongoose to MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/skribbl_dev');
+mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/skribbl_dev');
 
 // initialize passport strategy & configure w/ passport_strategy.js
 app.use(passport.initialize());
