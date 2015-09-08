@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/clintonjnelson/One-Piece-At-A-Time.git"
+    "url": "https://github.com/tcandens/skribbl"
   },
   "keywords": [
     "Code",
@@ -17,12 +17,11 @@
     "D30",
     "D37"
   ],
-  "author": "clintonjnelson@live.com",
+  "author": "joey.thies@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/clintonjnelson/One-Piece-At-A-Time/issues"
+    "url": "https://github.com/tcandens/skribbl/issues"
   },
-  "homepage": "https://github.com/clintonjnelson/One-Piece-At-A-Time",
   "devDependencies": {
     "autoprefixer": "^6.0.1",
     "chai": "^3.2.0",
