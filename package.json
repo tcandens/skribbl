@@ -22,8 +22,6 @@
   "bugs": {
     "url": "https://github.com/tcandens/skribbl/issues"
   },
-  "devDependencies": {
-  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.4",
