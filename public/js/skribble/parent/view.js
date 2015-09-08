@@ -8,7 +8,7 @@ define([
   var BaseSkribbleView = Marionette.ItemView.extend({
     template: _.template( template ),
     tagName: 'article',
-    className: 'parent-skribble muted'
+    className: 'parent-skribble text-muted'
   });
   return BaseSkribbleView;
 })

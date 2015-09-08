@@ -24,10 +24,18 @@ define([
     },
     events: {
       'submit @ui.form': 'submitForm',
+      'focus @ui.form': 'startAdding',
+      'blur @ui.form': 'stopAdding',
       'click @ui.signUp': function( e ) {
         e.preventDefault();
         RouterChannel.request('navigate', 'user/create', {trigger: true, replace:false});
       }
+    },
+    startAdding: function() {
+      $('html').addClass('is-adding-skribble');
+    },
+    stopAdding: function() {
+      $('html').removeClass('is-adding-skribble');
     },
     submitForm: function( e ) {
       e.preventDefault();

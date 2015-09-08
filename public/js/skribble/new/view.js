@@ -1,10 +1,11 @@
 define([
   'marionette',
   'underscore',
+  'jquery',
   'backbone.radio',
   'skribble/service',
   'text!skribble/new/template.html'
-], function( Marionette, _, Radio, SkribbleService, template ) {
+], function( Marionette, _, $, Radio, SkribbleService, template ) {
   'use strict';
 
   var RouterChannel = Radio.channel('Router');
@@ -15,10 +16,18 @@ define([
     template: _.template( template ),
     ui: {
       form: 'form',
-      content: '.new-skribble-content'
+      content: '.new-skribble-text'
     },
     events: {
       'submit @ui.form': 'submitSkribble',
+      'focus @ui.form' : 'startAdding',
+      'blur @ui.form': 'stopAdding'
+    },
+    startAdding: function() {
+      $('html').addClass('is-adding-skribble');
+    },
+    stopAdding: function() {
+      $('html').removeClass('is-adding-skribble');
     },
     submitSkribble: function( e ) {
       e.preventDefault();

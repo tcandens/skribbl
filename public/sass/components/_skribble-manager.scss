@@ -3,24 +3,41 @@
   width: 100%;
   max-width: 30rem;
   height: 100%;
-  margin-top: 5rem;
+  margin-top: 6rem;
   .parent-container {
-    position: absolute;
-    top: 0;
+    position: relative;
     max-width: 100%;
     transform: translateY(-100%);
+    .parent-skribble {
+      display: inline;
+    }
   }
-  .current-container {
+  .main-container {
     position: absolute;
     top: 0;
+    width: 100%;
+  }
+  .current-container {
     max-width: 100%;
+  }
+  .new-container {
+    width: 100%;
+    textarea {
+      border: none;
+      height: 6rem;
+    }
   }
   .control-container {
     position: fixed;
     bottom: 5rem;
     opacity: 0.5;
   }
-  /*.new-container {*/
-
-  /*}*/
+}
+.is-adding-skribble {
+  #navigation {
+    display: none;
+  }
+  .control-container {
+    display: none;
+  }
 }
