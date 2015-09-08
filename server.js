@@ -26,7 +26,7 @@ app.use(passport.initialize());
 require('./lib/bin/passport_strategy.js')(passport);
 
 // Serve static /public directory
-app.use( express.static( 'public' ) );
+app.use(express.static(__dirname + '/public'));
 
 // Load routers with routes
 require('./lib/routes/users_routes.js')(usersRouter);
