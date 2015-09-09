@@ -8,6 +8,7 @@
     "bundler": "bundle install",
     "bower": "./node_modules/bower/bin/bower install --allow-root",
     "grunt": "./node_modules/grunt-cli/bin/grunt build",
+    "postinstall": "npm run bundler && npm run bower && npm run grunt",
     "test": "./node_modules/grunt-cli/bin/grunt test"
   },
   "repository": {
@@ -25,7 +26,10 @@
   "bugs": {
     "url": "https://github.com/tcandens/skribbl/issues"
   },
-  "engines": "^0.12.4",
+  "engines": {
+    "node": "0.12.7",
+    "npm": "2.11.3"
+  },
   "devDependencies": {
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
