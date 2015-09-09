@@ -30,7 +30,7 @@
     "node": "0.12.7",
     "npm": "2.11.3"
   },
-  "devDependencies": {
+  "dependencies": {
     "chai": "^3.2.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-requirejs": "^0.4.4",
@@ -50,9 +50,7 @@
     "grunt-mocha-test": "^0.12.7",
     "grunt-nodemon": "^0.4.0",
     "mocha": "^2.2.5",
-    "sinon": "^1.16.1"
-  },
-  "dependencies": {
+    "sinon": "^1.16.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.4",
     "bower": "^1.5.2",
