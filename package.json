@@ -8,7 +8,6 @@
     "bundler": "bundle install",
     "bower": "./node_modules/bower/bin/bower install --allow-root",
     "grunt": "./node_modules/grunt-cli/bin/grunt build",
-    "postinstall": "npm run bundler && npm run bower && npm run grunt",
     "test": "./node_modules/grunt-cli/bin/grunt test"
   },
   "repository": {
