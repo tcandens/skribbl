@@ -5,8 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "./node_modules/grunt-cli/bin/grunt test",
-    "build": "./node_modules/grunt-cli/bin/grunt build"
+    "bundler": "bundle install",
+    "bower": "./node_modules/bower/bin/bower install --allow-root",
+    "grunt": "./node_modules/grunt-cli/bin/grunt build",
+    "postinstall": "npm run bundler && npm run bower && npm run grunt",
+    "test": "./node_modules/grunt-cli/bin/grunt test"
   },
   "repository": {
     "type": "git",
