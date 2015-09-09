@@ -6,3 +6,4 @@ npm-debug.log
 .env
 **/*.sw*
 **/db/
+Gemfile.lock
