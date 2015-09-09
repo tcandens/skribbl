@@ -26,6 +26,7 @@
   "bugs": {
     "url": "https://github.com/tcandens/skribbl/issues"
   },
+  "engines": "^0.12.4",
   "devDependencies": {
     "chai": "^3.2.0",
     "chai-http": "^1.0.0",
