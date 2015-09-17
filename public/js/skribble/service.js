@@ -10,11 +10,8 @@ define([
 
   var userService = UserService.getInstance();
 
-  // TODO: Consider Async Callback Based Versions of these methods
   var SkribbleService = (function () {
-
     var instance;
-
     var vent = Radio.channel('SkribbleService');
 
     function initService() {
@@ -82,12 +79,10 @@ define([
       // Select children
       function findChildren() {
         var children = current.get('children') || undefined;
-        if ( !children ) {
-          console.log('no children');
+        if ( !children || children.length <= 0 ) {
           return _package();
         }
         parents.push( current );
-        console.log( parents.length() );
         siblings.reset();
         siblings.add( children );
         current = siblings.at( 0 );
@@ -150,7 +145,7 @@ define([
           }
           var parentId = current.get('parent_skribbl') || undefined;
           if ( parentId ) {
-            var parentModel = new SkribbleModel({ id: parentId });
+            var parentModel = new SkribbleModel({ _id: parentId });
             parentModel.asyncFetch(function( model ) {
               siblings.add( model.get('children') );
             });
