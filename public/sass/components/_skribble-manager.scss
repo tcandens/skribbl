@@ -33,29 +33,26 @@
     }
   }
   .ui-prev-button, .ui-next-button, .ui-children-button, .ui-parent-button {
-    $color: coral;
-    color: $color;
+    cursor: pointer;
     transform-origin: 50% 50%;
     transition: all 400ms;
-    border: 1px solid $color;
   }
   .ui-prev-button {
     position: absolute;
     top: 0;
     left: -5rem;
-    transform: rotate(-90deg);
+    transform: rotate(180deg);
   }
   .ui-next-button {
     position: absolute;
     top: 0;
     right: -5rem;
-    transform: rotate(90deg);
   }
   .ui-parent-button {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate3d(-50%, -5rem, 0);
+    transform: translate3d(-50%, -5rem, 0) rotate(-90deg);
   }
   .ui-children-button {
     position: fixed;

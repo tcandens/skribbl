@@ -1,0 +1,107 @@
+.svg-icon {
+  fill: coral;
+  stroke-color: coral;
+  transition: all 400ms $easeInOutQuart;
+  animation-duration: 900ms;
+  animation-iteration-count: 1;
+  animation-timing-function: $easeInOutQuart;
+}
+.ui-next-button:active, .ui-next-button:hover {
+  .lead-circle {
+    animation-name: lead-circle;
+  }
+  .tail-circle {
+    animation-name: tail-circle;
+  }
+}
+.ui-prev-button:hover {
+  .lead-circle {
+    animation-name: lead-circle;
+  }
+  .tail-circle {
+    animation-name: tail-circle;
+  }
+}
+.ui-parent-button:hover {
+  .lead-circle {
+    animation-name: lead-circle;
+  }
+  .tail-circle {
+    animation-name: tail-circle;
+  }
+}
+.ui-children-button:hover {
+  .child-circle-one {
+    animation-name: child-one;
+  }
+  .child-circle-two {
+    animation-name: child-two;
+  }
+  .child-circle-three {
+    animation-name: child-three;
+  }
+}
+@keyframes lead-circle {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  60% {
+    transform: translate3d(150%, 0, 0);
+  }
+  80% {
+    transform: translate3d(150%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes tail-circle {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(0, 0, 0);
+  }
+  60% {
+    transform: translate3d(150%, 0, 0);
+  }
+  80% {
+    transform: translate3d(150%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes child-one {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(200%, 0, 0);
+  }
+  60% {
+    transform: translate3d(800%, -200%, 0%);
+  }
+}
+@keyframes child-two {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(0, 0, 0);
+  }
+  60% {
+    transform: translate3d(0, -200%, 0);
+  }
+}
+@keyframes child-three {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  40% {
+    transform: translate3d(-200%, 0, 0);
+  }
+  60% {
+    transform: translate3d(-200%, -200%, 0);
+  }
+}
