@@ -1,0 +1,49 @@
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#container {
+  height: 100%;
+  overflow: hidden;
+}
+#content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: $c-purp;
+  padding-bottom: 250px;
+}
+#content:before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 1000ms $easeInOutQuart;
+  animation-name: fadeOut;
+  animation-direction: reverse;
+  animation-duration: 1000ms;
+  animation-timing-function: $easeInOutQuart;
+  background-color: $c-red;
+}
+.is-switched #content {
+  &:before {
+    animation-name: fadeOut;
+    opacity: 0;
+  }
+}

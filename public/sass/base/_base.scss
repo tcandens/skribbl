@@ -2,7 +2,11 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
 .navbar-fixed-bottom {
   height: 3.5rem;
+}
+input[type="text"], input[type="password"], textarea {
+  background: transparent !important;
+  outline: none;
+  border: none;
 }

@@ -15,13 +15,15 @@ define([
   var NewSkribbleView = Marionette.ItemView.extend({
     template: _.template( template ),
     ui: {
-      form: 'form',
-      content: '.new-skribble-text'
+      form: '.new-skribble-form',
+      content: '.new-skribble-text',
+      cancel: '.ui-cancel'
     },
     events: {
       'submit @ui.form': 'submitSkribble',
       'focus @ui.form' : 'startAdding',
-      'blur @ui.form': 'stopAdding'
+      'blur @ui.form': 'stopAdding',
+      'click @ui.cancel': 'stopAdding'
     },
     startAdding: function() {
       $('html').addClass('is-adding-skribble');
@@ -31,6 +33,7 @@ define([
     },
     submitSkribble: function( e ) {
       e.preventDefault();
+      $('html').removeClass('is-adding-skribble');
       var skribbleContent = this.ui.content.val();
       service.createSkribble({
         content: skribbleContent

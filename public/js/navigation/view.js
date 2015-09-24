@@ -32,6 +32,7 @@ define([
     initialize: function() {
       UserChannel.reply('user', function( user ) {
         this.toggleLogin( user );
+        console.log('user change');
       }, this);
       NavChannel.reply('activate', function( button ) {
         console.log( button );
@@ -41,8 +42,8 @@ define([
     activateNav: function( button ) {
       switch( button ) {
         case 'login':
-          this.ui.loginLink.addClass('active');
-          console.log('activate login button');
+          this.ui.loginLink.addClass('hidden');
+          console.log(button)
           break;
         default:
           console.log( button );
@@ -50,16 +51,17 @@ define([
     },
     toggleLogin: function( user ) {
       if ( user.isAuthenticated ) {
-        this.ui.loginLink.addClass('disabled').removeClass('active');
-        this.ui.logoutLink.addClass('disabled').removeClass('active');
-        this.ui.profileLink.removeClass('disabled');
+        this.ui.loginLink.prop('hidden', true);
+        this.ui.logoutLink.removeAttr('hidden');
+        this.ui.profileLink.removeAttr('hidden');
       } else {
-        this.ui.loginLink.removeClass('disabled');
-        this.ui.logoutLink.addClass('disabled').removeClass('active');
-        this.ui.profileLink.addClass('disabled').removeClass('active');
+        this.ui.loginLink.removeAttr('hidden');
+        this.ui.logoutLink.prop('hidden', true);
+        this.ui.profileLink.prop('hidden', true);
       }
     },
     onBeforeShow: function() {
+      console.log("on before show");
       service.credentials(function( user ) {
         this.toggleLogin( user );
       }.bind( this ))

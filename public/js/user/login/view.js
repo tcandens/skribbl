@@ -38,6 +38,7 @@ define([
       $('html').removeClass('is-adding-skribble');
     },
     submitForm: function( e ) {
+      $('html').removeClass('is-adding-skribble');
       e.preventDefault();
       var username = this.ui.username.val();
       var password = this.ui.password.val();
