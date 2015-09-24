@@ -1,12 +1,14 @@
 @keyframes fadeInOut {
   0% {
     opacity: 0;
+    background-position: 0 0;
   }
   50% {
     opacity: 1;
   }
   100% {
     opacity: 0;
+    background-position: 0 100%;
   }
 }
 @keyframes fadeOut {
@@ -24,8 +26,12 @@
 #content {
   overflow-y: auto;
   overflow-x: hidden;
+  transition: background-color 500ms $easeInOutQuart;
   background-color: $c-purp;
   padding-bottom: 250px;
+}
+#content > * {
+  position: relative;
 }
 #content:before {
   display: block;
@@ -33,17 +39,18 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  transition: opacity 1000ms $easeInOutQuart;
-  animation-name: fadeOut;
-  animation-direction: reverse;
-  animation-duration: 1000ms;
-  animation-timing-function: $easeInOutQuart;
-  background-color: $c-red;
+  height: 100%;
+  opacity: 0;
 }
 .is-switched #content {
-  &:before {
-    animation-name: fadeOut;
-    opacity: 0;
+  background-color: $c-red;
+}
+.is-switching-next, .is-switching-prev, .is-switching-parent, .is-switching-children {
+  #content {
+    &:before {
+      background: linear-gradient(180deg, $c-purp 0%, $c-red 100%);
+      animation-name: fadeInOut;
+    }
   }
 }
+

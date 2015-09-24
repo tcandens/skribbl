@@ -64,13 +64,17 @@
 
 .is-no-previous .ui-prev-button {
   opacity: 0;
+  visibility: hidden;
 }
 .is-no-next .ui-next-button {
   opacity: 0;
+  visibility: hidden;
 }
 .is-no-parent .ui-parent-button {
   opacity: 0;
+  visibility: hidden;
 }
 .is-no-children .ui-children-button {
   opacity: 0;
+  visibility: hidden;
 }

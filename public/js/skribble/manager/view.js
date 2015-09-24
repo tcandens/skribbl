@@ -58,8 +58,8 @@ define([
       if ( skribblePackage.current ) this.showChildView('current', currentView);
       if ( skribblePackage.parent ) this.showChildView('parent', parentView);
       if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
+      RootChannel.request('toggleClass', 'is-switched');
       this.el.className = skribblePackage.displayClass + ' ' + this.className;
-      $('html').toggleClass('is-switched');
       this.navigate( skribblePackage );
       return this;
     },

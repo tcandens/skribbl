@@ -28,18 +28,23 @@ define([
       RootChannel.reply('setClass', function( className ) {
         this.setClass( className );
       }, this);
+      RootChannel.reply('toggleClass', function( className  ) {
+        this.toggleClass( className );
+      }, this);
     },
     onRender: function() {
       var navView = new NavView();
       this.showChildView('nav', navView);
     },
     setClass: function ( className ) {
-      var el = this.el;
-      var oldClasses = this.el.className;
-      el.className += ' ' + className;
+      var $el = this.$el;
+      $el.addClass( className );
       setTimeout(function () {
-        el.className = oldClasses;
+        $el.removeClass( className );
       }, 1000);
+    },
+    toggleClass: function( className ) {
+      this.$el.toggleClass( className );
     }
   });
   return RootView;
