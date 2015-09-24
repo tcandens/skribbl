@@ -59,6 +59,7 @@ define([
       if ( skribblePackage.parent ) this.showChildView('parent', parentView);
       if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
       this.el.className = skribblePackage.displayClass + ' ' + this.className;
+      $('html').toggleClass('is-switched');
       this.navigate( skribblePackage );
       return this;
     },

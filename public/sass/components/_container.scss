@@ -1,15 +1,20 @@
-@keyframes spectrum-down {
+@keyframes fadeInOut {
   0% {
-    background: $c-red;
+    opacity: 0;
   }
-  1% {
-    background: linear-gradient(180deg, $c-red 0%, $c-red 99%, $c-purp 100%);
-  }
-  99% {
-    background: linear-gradient(180deg, $c-purp 0%, $c-purp 99%, $c-red 100%);
+  50% {
+    opacity: 1;
   }
   100% {
-    background: $c-purp;
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 #container {
@@ -19,9 +24,26 @@
 #content {
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: $c-purp;
+  padding-bottom: 250px;
+}
+#content:before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: opacity 1000ms $easeInOutQuart;
+  animation-name: fadeOut;
+  animation-direction: reverse;
   animation-duration: 1000ms;
   animation-timing-function: $easeInOutQuart;
-  animation-name: spectrum-down;
-  background: $c-purp;
-  padding-bottom: 250px;
+  background-color: $c-red;
+}
+.is-switched #content {
+  &:before {
+    animation-name: fadeOut;
+    opacity: 0;
+  }
 }
