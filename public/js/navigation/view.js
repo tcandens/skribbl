@@ -27,7 +27,8 @@ define([
       'click @ui.loginLink': 'showLogin',
       'click @ui.randomLink': 'showRandomSkribble',
       'click @ui.profileLink': 'showProfile',
-      'click @ui.homeLink': 'showHome'
+      'click @ui.homeLink': 'showHome',
+      'click @ui.logoutLink': 'logout'
     },
     initialize: function() {
       UserChannel.reply('user', function( user ) {
@@ -80,6 +81,9 @@ define([
     },
     showRandomSkribble: function() {
       RouterChannel.request('navigate', 'skribble/random', {trigger:true});
+    },
+    logout: function() {
+      service.logout();
     }
   });
   return NavView;

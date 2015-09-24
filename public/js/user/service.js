@@ -87,7 +87,7 @@ define([
               email: data.email,
               username: data.username
             }
-            cookies.set( config.cookieName, tempCookie );
+            cookies.set( config.cookieName, tempCookie, { expires: 7, path: '' } );
             // Set User and isAuthenticated
             user.isAuthenticated = true;
             user.email = data.email;
@@ -123,7 +123,10 @@ define([
 
       // LOGOUT
       function logout() {
-
+        cookies.remove( config.cookieName, { path: '' } );
+        user.isAuthenticated = false;
+        vent.request('user', user);
+        RouterChannel.request('navigate', 'user/login', {trigger: true, replace: false});
       }
 
       startCheck();
