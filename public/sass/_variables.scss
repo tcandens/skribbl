@@ -20,6 +20,8 @@
 // General variable structure
 //
 // Variable format should follow the `$component-modifier-state-property` order.
+// Custom easing functions variables
+$easeInOutQuart: cubic-bezier(0.770, 0.000,0.175, 1.000);
 
 
 // Colors
@@ -32,7 +34,14 @@ $gray-light:                #818a91 !default;
 $gray-lighter:              #eceeef !default;
 $gray-lightest:             #f7f7f9 !default;
 
-$brand-primary:             #6570B7 !default;
+$c-black: #2b2d42;
+$c-gray: #8D99AE;
+$c-purp: #7D2EF4;
+$c-red: #Ef233c;
+$c-red-dark: #8C0219;
+
+/*$brand-primary:             #6570B7 !default;*/
+$brand-primary:             $c-black !default;
 $brand-success:             #7BCEBA !default;
 $brand-info:                #5bc0de !default;
 $brand-warning:             #f0ad4e !default;
@@ -68,7 +77,7 @@ $border-width:               .0625rem !default;
 // Settings for the `<body>` element.
 
 $body-bg:                    #fff !default;
-$body-color:                 $gray-dark !default;
+$body-color:                 white !default;
 
 
 // Links

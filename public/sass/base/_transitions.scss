@@ -1,0 +1,84 @@
+@keyframes show-up {
+  0% {
+    transform: translate3d(0, 80px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes show-down {
+  0% {
+    transform: translate3d(0, -80px, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes show-next {
+  0% {
+    transform: translate3d(80px, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+@keyframes show-prev {
+  0% {
+    transform: translate3d(-80px, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+.is-adding-skribble {
+  #navigation {
+    transform: translate3d(0, 100%, 0);
+  }
+  .ui-next-button, .ui-prev-button, .ui-parent-button, .ui-children-button {
+    opacity: 0;
+  }
+  .new-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white !important;
+    .new-skribble-text {
+      height: 80vh;
+    }
+    form > input[type="submit"] {
+      height: 20vh;
+    }
+  }
+}
+.is-showing, .is-destroying {
+  animation-duration: 500ms;
+  animation-timing-function: $easeInOutQuart;
+}
+.is-destroying {
+  animation-direction: reverse;
+}
+.is-switching-parent .is-showing, .is-switching-parent .is-destroying {
+  animation-name: show-down;
+}
+.is-switching-children .is-showing, .is-switching-children .is-destroying {
+  animation-name: show-up;
+}
+.is-switching-next .is-showing {
+  animation-name: show-next;
+}
+.is-switching-prev .is-showing {
+  animation-name: show-prev;
+}
+.is-showing .parent-skribble {
+  animation-delay: 250ms;
+}

@@ -9,7 +9,7 @@ module.exports = {
     options: {
       proxy: 'localhost:8000',
       watchTask: true,
-      reloadDelay: 2000
+      reloadDelay: 3000
     }
   }
 };

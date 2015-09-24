@@ -1,8 +1,9 @@
 .c-skribble-manager {
   position: relative;
   width: 100%;
+  width: 70%;
   max-width: 30rem;
-  height: 100%;
+  height: 20rem;
   margin-top: 6rem;
   .parent-container {
     position: relative;
@@ -26,22 +27,37 @@
       border: none;
       height: 6rem;
     }
+    transition: all 400ms $easeInOutQuart;
   }
-  .control-container {
-    pointer-events: none;
-    position: fixed;
+  .ui-prev-button, .ui-next-button, .ui-children-button, .ui-parent-button {
+    $color: coral;
+    color: $color;
+    transform-origin: 50% 50%;
+    transition: opacity 400ms;
+    border: 1px solid $color;
+  }
+  .ui-prev-button {
+    position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
+    left: -5rem;
+    transform: rotate(-90deg);
   }
-}
-.is-adding-skribble {
-  #navigation {
-    display: none;
+  .ui-next-button {
+    position: absolute;
+    top: 0;
+    right: -5rem;
+    transform: rotate(90deg);
   }
-  .control-container {
-    display: none;
+  .ui-parent-button {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate3d(-50%, -5rem, 0);
+  }
+  .ui-children-button {
+    position: fixed;
+    left: 50%;
+    bottom: 5rem;
+    transform: translate3d(-50%, 0, 0);
   }
 }

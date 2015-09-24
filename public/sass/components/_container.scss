@@ -1,0 +1,27 @@
+@keyframes spectrum-down {
+  0% {
+    background: $c-red;
+  }
+  1% {
+    background: linear-gradient(180deg, $c-red 0%, $c-red 99%, $c-purp 100%);
+  }
+  99% {
+    background: linear-gradient(180deg, $c-purp 0%, $c-purp 99%, $c-red 100%);
+  }
+  100% {
+    background: $c-purp;
+  }
+}
+#container {
+  height: 100%;
+  overflow: hidden;
+}
+#content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation-duration: 1000ms;
+  animation-timing-function: $easeInOutQuart;
+  animation-name: spectrum-down;
+  background: $c-purp;
+  padding-bottom: 250px;
+}

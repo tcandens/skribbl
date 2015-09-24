@@ -13,6 +13,7 @@ define([
   var ManagerChannel = Radio.channel('SkribbleManager');
   var ServiceChannel = Radio.channel('SkribbleService');
   var RouterChannel = Radio.channel('Router');
+  var RootChannel = Radio.channel('RootView')
   var userService = UserService.getInstance();
 
   var SkribbleManagerView = Marionette.LayoutView.extend({
@@ -67,21 +68,25 @@ define([
       RouterChannel.request('navigate', url, { trigger: false, replace: true });
     },
     selectChildren: function() {
+      RootChannel.request('setClass', 'is-switching-children');
       var skribblePackage = this.service.findChild();
       this.build( skribblePackage );
       this.navigate( skribblePackage );
     },
     findNext: function() {
+      RootChannel.request('setClass', 'is-switching-next');
       var skribblePackage = this.service.findNext();
       this.build( skribblePackage );
       this.navigate( skribblePackage );
     },
     findPrev: function() {
+      RootChannel.request('setClass', 'is-switching-prev');
       var skribblePackage = this.service.findPrevious();
       this.build( skribblePackage );
       this.navigate( skribblePackage );
     },
     selectParent: function() {
+      RootChannel.request('setClass', 'is-switching-parent');
       this.service.findParent(function( skribblePackage ) {
         this.build( skribblePackage );
         this.navigate( skribblePackage );
