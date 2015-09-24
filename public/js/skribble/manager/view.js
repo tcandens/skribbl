@@ -40,6 +40,9 @@ define([
         this.showChildView('new', new NewSkribbleView() );
       }
     },
+    onBeforeDestroy: function() {
+      RootChannel.request('removeClass', 'is-switched');
+    },
     ui: {
       next: '.ui-next-button',
       prev: '.ui-prev-button',

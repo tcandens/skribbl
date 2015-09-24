@@ -52,6 +52,9 @@
     right: 0;
     bottom: 0;
     background: white !important;
+    .btn-group {
+      visibility: visible !important;
+    }
     .new-skribble-text {
       height: 80vh;
     }

@@ -31,6 +31,9 @@ define([
       RootChannel.reply('toggleClass', function( className  ) {
         this.toggleClass( className );
       }, this);
+      RootChannel.reply('removeClass', function( classname ) {
+        this.$el.removeClass( classname );
+      }, this);
     },
     onRender: function() {
       var navView = new NavView();
