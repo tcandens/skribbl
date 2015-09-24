@@ -44,9 +44,21 @@ define([
         }
       })();
       var _package = function() {
+        var hasParent = parents.length() > 0 ? true : false;
+        var hasChildren = current.get('children') && current.get('children').length > 0 ? true : false;
+        var hasNext = siblings.at( siblings.indexOf( current ) + 1 ) ? true : false;
+        var hasPrev = siblings.at( siblings.indexOf( current ) - 1 ) ? true : false;
+        var displayClasses = [];
+
+        if ( !hasParent ) displayClasses.push('is-no-parent');
+        if ( !hasChildren ) displayClasses.push('is-no-children');
+        if ( !hasNext ) displayClasses.push('is-no-next');
+        if ( !hasPrev ) displayClasses.push('is-no-previous')
+
         return {
           current: current,
-          parent: parents.peek()
+          parent: parents.peek(),
+          displayClass: displayClasses.join(' ')
         }
       }
 

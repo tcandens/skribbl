@@ -16,12 +16,14 @@ define([
     template: _.template( template ),
     ui: {
       form: '.new-skribble-form',
-      content: '.new-skribble-text'
+      content: '.new-skribble-text',
+      cancel: '.ui-cancel'
     },
     events: {
       'submit @ui.form': 'submitSkribble',
       'focus @ui.form' : 'startAdding',
-      'blur @ui.form': 'stopAdding'
+      'blur @ui.form': 'stopAdding',
+      'click @ui.cancel': 'stopAdding'
     },
     startAdding: function() {
       $('html').addClass('is-adding-skribble');

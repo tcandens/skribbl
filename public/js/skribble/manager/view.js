@@ -53,12 +53,12 @@ define([
       'click @ui.parent': 'selectParent'
     },
     build: function( skribblePackage ) {
-      // Unclear conditional structure
       var currentView = new CurrentSkribbleView({ model: skribblePackage.current });
       var parentView = new ParentSkribbleView({ model: skribblePackage.parent });
       if ( skribblePackage.current ) this.showChildView('current', currentView);
       if ( skribblePackage.parent ) this.showChildView('parent', parentView);
       if ( !skribblePackage.parent && this.getChildView('parent') ) this.getChildView('parent').destroy();
+      this.el.className = skribblePackage.displayClass + ' ' + this.className;
       this.navigate( skribblePackage );
       return this;
     },
