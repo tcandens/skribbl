@@ -13,6 +13,11 @@ define([
   var service = SkribbleService.getInstance();
 
   var NewSkribbleView = Marionette.ItemView.extend({
+    initialize: function( options ) {
+      if ( options.parent !== 'undefined' ) {
+        this.options.parent = options.parent
+      }
+    },
     template: _.template( template ),
     ui: {
       form: '.new-skribble-form',
@@ -35,8 +40,11 @@ define([
       e.preventDefault();
       $('html').removeClass('is-adding-skribble');
       var skribbleContent = this.ui.content.val();
+      var storyName = this.options.storyName;
       service.createSkribble({
-        content: skribbleContent
+        content: skribbleContent,
+        story_name:
+        parent_skribble:
       }, function( response ) {
         var path = 'skribble/' + response.id + '/trace';
         RouterChannel.request('navigate', path, {trigger: true});

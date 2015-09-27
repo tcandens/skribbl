@@ -5,8 +5,9 @@ define([
   'user/service',
   'skribble/list/view',
   'skribble/collection',
+  'user/newstory/view',
   'text!user/profile/template.html'
-], function( Marionette, _, $, UserService, SkribbleListView, SkribbleCollection, template ) {
+], function( Marionette, _, $, UserService, SkribbleListView, SkribbleCollection, NewStoryView, template ) {
   'use strict';
 
   var userService = UserService.getInstance();
@@ -15,7 +16,21 @@ define([
     template: _.template( template ),
     regions: {
       nav: '.c-profile__navigation',
-      skribbleList: '.c-profile__skribble-list'
+      skribbleList: '.c-profile__skribble-list',
+      newStory: '.c-new-story'
+    },
+    ui: {
+      createStory: '.ui-create-new-story'
+    },
+    events: {
+      'click @ui.createStory': 'createStory'
+    },
+    templateHelpers: function() {
+      return {
+        userName: function() {
+          return userService.credentials().username;
+        }
+      }
     },
     onShow: function() {
       this.viewList();
@@ -32,6 +47,10 @@ define([
           self.showChildView('skribbleList', listView);
         })
       });
+    },
+    createStory: function() {
+      this.ui.createStory.hide();
+      this.getRegion('newStory').show(new NewStoryView() );
     }
   });
   return ProfileView;

@@ -112,7 +112,8 @@ define([
       // getCredentials
       function getCredentials( callback ) {
         if ( user.isAuthenticated ) {
-          if ( typeof callback === 'function' ) callback( user );
+          if ( typeof callback === 'function' ) { callback( user ) }
+          else { return user };
           vent.request('user', user);
         } else {
           RouterChannel.request('navigate', 'user/login', {trigger: true, replace: false});

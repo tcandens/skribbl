@@ -2,10 +2,9 @@
   <p class="lead card-text"><%= content %></p>
 </div>
 <div class="col-md-4">
-  <h6 class="card-title skribble-id"><%= _id %></h6>
-  <span><%= created_at %></span>
+  <h6 class="skribble-id"><%= getId() %></h6>
+  <span><%= getDate() %></span>
   <span><%= story_name %></span>
-  <span><%= parent_skribbl %></span>
   <div class="row">
     <button class="show-skribble btn-primary btn btn-lg">View</button>
     <button class="show-story btn btn-secondary btn-lg">Read</button>

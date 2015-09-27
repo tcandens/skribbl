@@ -170,13 +170,14 @@ define([
 
       function createSkribble( skribble, callback ) {
         userService.credentials(function( user ) {
-          var currentId = current.get('id') || current.get('_id') || undefined;
+          var currentId = current.get('_id') ? current.get('_id') : undefined;
           var skribbleModel = current.clone().unset('_id').unset('id');
           skribbleModel.set({
             'eat': user.token,
             'parent_skribbl': currentId,
             'author': user.username,
-            'content': skribble.content
+            'content': skribble.content,
+            'story_name': skribble.story_name
           });
           skribbleModel.save(null, {
             success: function( model, response, options ) {

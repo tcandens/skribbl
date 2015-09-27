@@ -52,15 +52,15 @@
     right: 0;
     bottom: 0;
     background: white !important;
-    .btn-group {
-      visibility: visible !important;
-    }
-    .new-skribble-text {
-      height: 80vh;
-    }
-    form > input[type="submit"] {
-      height: 20vh;
-    }
+  }
+  .btn-group {
+    visibility: visible !important;
+  }
+  .new-skribble-text {
+    height: 80vh;
+  }
+  form > input[type="submit"] {
+    height: 20vh;
   }
 }
 .is-showing, .is-destroying {

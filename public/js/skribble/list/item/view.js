@@ -12,6 +12,17 @@ define([
     tagName: 'article',
     className: 'card row text-center p-a-lg',
     template: _.template( template ),
+    templateHelpers: function() {
+      return {
+        getDate: function() {
+          var date = new Date( this.created_at );
+          return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        },
+        getId: function() {
+          return '...' + this._id.slice(-5);
+        }
+      }
+    },
     ui: {
       view: '.show-skribble',
       read: '.show-story'
