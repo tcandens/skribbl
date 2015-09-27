@@ -1,3 +1,14 @@
+.new-container {
+  width: 100%;
+  transition: all 400ms $easeInOutQuart;
+  .btn-group {
+    visibility: hidden;
+  }
+  textarea {
+    border: none;
+    height: 6rem;
+  }
+}
 .c-skribble-manager {
   position: relative;
   width: 100%;
@@ -20,17 +31,6 @@
   }
   .current-container {
     max-width: 100%;
-  }
-  .new-container {
-    width: 100%;
-    transition: all 400ms $easeInOutQuart;
-    .btn-group {
-      visibility: hidden;
-    }
-    textarea {
-      border: none;
-      height: 6rem;
-    }
   }
   .ui-prev-button, .ui-next-button, .ui-children-button, .ui-parent-button {
     cursor: pointer;

@@ -19,10 +19,12 @@ define([
     events: {
       'submit @ui.form': 'showNewSkribble'
     },
-    showNewSkribble: function() {
+    showNewSkribble: function(e) {
+      e.preventDefault();
       this.ui.form.hide();
       var storyName = this.ui.storyName.val();
-      this.showChildView('newSkribble', new NewSkribbleView({parent: null, story_name: storyName}))
+      console.log( storyName );
+      this.showChildView('newSkribble', new NewSkribbleView({new: true, story_name: storyName}))
     }
   });
   return NewStoryView;

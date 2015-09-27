@@ -170,14 +170,13 @@ define([
 
       function createSkribble( skribble, callback ) {
         userService.credentials(function( user ) {
-          var currentId = current.get('_id') ? current.get('_id') : undefined;
+          var currentId = current.get('_id') ? current.get('_id') : null;
           var skribbleModel = current.clone().unset('_id').unset('id');
           skribbleModel.set({
             'eat': user.token,
             'parent_skribbl': currentId,
             'author': user.username,
             'content': skribble.content,
-            'story_name': skribble.story_name
           });
           skribbleModel.save(null, {
             success: function( model, response, options ) {
@@ -185,6 +184,26 @@ define([
             },
             error: function( model, response, options ) {
               console.log('Could not create skribble');
+            }
+          });
+        });
+      }
+
+      function createStory( skribble, callback ) {
+        userService.credentials(function( user ) {
+          var storySkribble = new SkribbleModel({
+            'eat': user.token,
+            'author': user.username,
+            'story_name': skribble.story_name,
+            'content': skribble.content,
+          });
+          console.log( storySkribble );
+          storySkribble.save(null, {
+            success: function( model, response, options ) {
+              if ( typeof callback == 'function' ) callback( response );
+            },
+            error: function( model, response, options ) {
+              console.log('Could not create story');
             }
           });
         });
@@ -206,6 +225,7 @@ define([
         findNext: findNextSibling,
         findPrevious: findPreviousSibling,
         createSkribble: createSkribble,
+        createStory: createStory,
         // Internal methods useful for testing and inspecting
         _state: _getState
       };

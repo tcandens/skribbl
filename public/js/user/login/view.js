@@ -32,13 +32,13 @@ define([
       }
     },
     startAdding: function() {
-      $('html').addClass('is-adding-skribble');
+      $('html').addClass('is-logging-in');
     },
     stopAdding: function() {
-      $('html').removeClass('is-adding-skribble');
+      $('html').removeClass('is-logging-in');
     },
     submitForm: function( e ) {
-      $('html').removeClass('is-adding-skribble');
+      $('html').removeClass('is-logging-in');
       e.preventDefault();
       var username = this.ui.username.val();
       var password = this.ui.password.val();

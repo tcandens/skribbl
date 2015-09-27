@@ -38,6 +38,11 @@
     opacity: 1;
   }
 }
+.is-loggin-in {
+  #navigation {
+    transform: translate3d(0, 100%, 0);
+  }
+}
 .is-adding-skribble {
   #navigation {
     transform: translate3d(0, 100%, 0);
@@ -51,7 +56,11 @@
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 999;
     background: white !important;
+    textarea {
+      color: black !important;
+    }
   }
   .btn-group {
     visibility: visible !important;
