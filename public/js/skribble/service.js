@@ -196,11 +196,12 @@ define([
             'author': user.username,
             'story_name': skribble.story_name,
             'content': skribble.content,
+            'parent_skribbl': null
           });
           console.log( storySkribble );
           storySkribble.save(null, {
             success: function( model, response, options ) {
-              if ( typeof callback == 'function' ) callback( response );
+              if ( typeof callback == 'function' ) callback( response, model );
             },
             error: function( model, response, options ) {
               console.log('Could not create story');

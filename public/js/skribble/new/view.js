@@ -61,8 +61,8 @@ define([
       service.createStory({
         content: skribbleContent,
         story_name: storyName,
-      }, function( response ) {
-        console.log( response );
+      }, function( response, model ) {
+        console.log( response, model );
         var path = 'skribble/' + response.id;
         RouterChannel.request('navigate', path, {trigger: true});
       });
