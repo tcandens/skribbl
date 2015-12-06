@@ -1,6 +1,7 @@
 .svg-icon {
-  fill: coral;
-  stroke-color: coral;
+  $color: $c-black;
+  fill: $color;
+  stroke-color: $color;
   transition: all 400ms $easeInOutQuart;
   animation-duration: 900ms;
   animation-iteration-count: 1;
