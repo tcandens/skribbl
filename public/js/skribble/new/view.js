@@ -14,7 +14,9 @@ define([
 
   var NewSkribbleView = Marionette.ItemView.extend({
     initialize: function( options ) {
-      if ( options.new ) this.options = options;
+      this.options = _.defaults(options || {}, {
+        new: false
+      });
     },
     template: _.template( template ),
     ui: {

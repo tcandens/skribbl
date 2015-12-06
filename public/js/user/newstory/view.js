@@ -23,7 +23,6 @@ define([
       e.preventDefault();
       this.ui.form.hide();
       var storyName = this.ui.storyName.val();
-      console.log( storyName );
       this.showChildView('newSkribble', new NewSkribbleView({new: true, story_name: storyName}))
     }
   });

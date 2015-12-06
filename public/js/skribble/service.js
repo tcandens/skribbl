@@ -198,7 +198,6 @@ define([
             'content': skribble.content,
             'parent_skribbl': null
           });
-          console.log( storySkribble );
           storySkribble.save(null, {
             success: function( model, response, options ) {
               if ( typeof callback == 'function' ) callback( response, model );
