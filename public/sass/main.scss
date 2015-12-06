@@ -49,9 +49,10 @@
 @import "../vendor/bootstrap/scss/utilities-responsive";
 
 // Custom Components
-@import "base/_base.scss";
-@import "base/_transitions.scss";
-@import "components/_skribble-manager.scss";
-@import "components/_nav.scss";
-@import "components/_container.scss";
-@import "components/_svg-icons.scss";
+@import "base/_base";
+@import "base/_transitions";
+@import "components/_skribble-manager";
+@import "components/_nav";
+@import "components/_container";
+@import "components/_svg-icons";
+@import "components/_frontpage";

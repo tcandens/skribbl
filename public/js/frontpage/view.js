@@ -2,15 +2,16 @@ define([
   'marionette',
   'underscore',
   'backbone.radio',
+  'frontpage/animation',
   'text!frontpage/template.html'
-], function( Marionette, _, Radio, template ) {
+], function( Marionette, _, Radio, FrontpageAnimation, template ) {
   'use strict';
 
   var RouterChannel = Radio.channel('Router');
 
   var FrontpageView = Marionette.ItemView.extend({
     tagName: 'section',
-    className: 'jumbotron jumbotron-fluid',
+    className: '',
     template: _.template( template ),
     ui: {
       showRandomSkribble: '#show-random-skribble'
@@ -21,6 +22,9 @@ define([
     showRandomSkribble: function( e ) {
       e.preventDefault();
       RouterChannel.request('navigate', 'skribble/random', {trigger:true});
+    },
+    onShow: function() {
+      FrontpageAnimation.start();
     }
   });
   return FrontpageView;

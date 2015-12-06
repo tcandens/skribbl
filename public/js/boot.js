@@ -10,7 +10,11 @@ requirejs.config({
     'marionette.radio': 'marionette.radio',
     'text': '../vendor/requirejs-text/text',
     'base64': '../vendor/base-64/base64',
-    'cookies': '../vendor/js-cookie/src/js.cookie'
+    'cookies': '../vendor/js-cookie/src/js.cookie',
+    'timelineLite': '../vendor/gsap/src/minified/TimelineLite.min',
+    'tweenLite': '../vendor/gsap/src/minified/TweenLite.min',
+    'easingPack': '../vendor/gsap/src/minified/easing/EasePack.min',
+    'cssPlugin': '../vendor/gsap/src/minified/plugins/CSSPlugin.min'
   },
   map: {
     '*': {
