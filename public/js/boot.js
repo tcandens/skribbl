@@ -14,7 +14,8 @@ requirejs.config({
     'timelineLite': '../vendor/gsap/src/minified/TimelineLite.min',
     'tweenLite': '../vendor/gsap/src/minified/TweenLite.min',
     'easingPack': '../vendor/gsap/src/minified/easing/EasePack.min',
-    'cssPlugin': '../vendor/gsap/src/minified/plugins/CSSPlugin.min'
+    'cssPlugin': '../vendor/gsap/src/minified/plugins/CSSPlugin.min',
+    'fittext': '../vendor/FitText.js/jquery.fittext'
   },
   map: {
     '*': {
@@ -25,6 +26,9 @@ requirejs.config({
     'marionette.radio': {
       'marionette': 'marionette'
     }
+  },
+  shim: {
+    'fittext': ['jquery']
   }
 });
 

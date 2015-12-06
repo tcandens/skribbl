@@ -63,7 +63,9 @@
 }
 
 @media (min-width: 30em) {
-  font-size: 1.2rem;
+  .c-skribble-manager {
+    font-size: 1.2rem;
+  }
 }
 
 .is-no-previous .ui-prev-button {

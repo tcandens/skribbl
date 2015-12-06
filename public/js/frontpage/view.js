@@ -1,10 +1,12 @@
 define([
+  'jquery',
   'marionette',
   'underscore',
   'backbone.radio',
   'frontpage/animation',
+  'fittext',
   'text!frontpage/template.html'
-], function( Marionette, _, Radio, FrontpageAnimation, template ) {
+], function( $, Marionette, _, Radio, FrontpageAnimation, FitText, template ) {
   'use strict';
 
   var RouterChannel = Radio.channel('Router');
@@ -24,6 +26,7 @@ define([
       RouterChannel.request('navigate', 'skribble/random', {trigger:true});
     },
     onShow: function() {
+      $('#title').fitText(0.8);
       FrontpageAnimation.start();
     }
   });
